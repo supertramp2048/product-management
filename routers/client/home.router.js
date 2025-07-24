@@ -1,9 +1,5 @@
 const express= require("express");
 const router= express.Router();
-
-router.get("/",(req,res) =>{
-    res.render("pages/home/index.pug",{
-        title: "Home"
-    })
-})
+const controller = require("../../controller/client/home.controller");
+router.get("/",controller.index)
 module.exports= router
