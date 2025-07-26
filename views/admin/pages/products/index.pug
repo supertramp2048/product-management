@@ -1,1 +1,28 @@
-h1 trang san pham
+extends ../../layouts/default.pug
+
+block main 
+  table 
+    thead 
+      th STT
+      td ID
+      th Product's name 
+      th Image 
+      th source image 
+      th delete
+      th Action
+    tbody 
+      each product,index in products   
+            tr 
+            td(class="border border-white") #{index}
+            td(class="border border-white") #{product._id}
+            td(class="border border-white") #{product.title} 
+            td(class="border border-white") 
+                img(src=`product.thumbnail`, alt="img")
+            td(class="border border-white") #{product.thumbnail}
+            td(class="border border-white") #{product.delete}
+            td(class="flex") 
+                button(class="btn-primary") Fix 
+                if product.delete == true 
+                  button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
+                else 
+                  button(class="btn-danger") Delete
