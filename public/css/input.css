@@ -8,4 +8,16 @@
     .btn-danger {
         @apply bg-red-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-400  active:scale-95 transition-all duration-150;
     }
+    .active{
+      @apply bg-green-500
+    }
+    .pagination{
+      @apply flex fixed bottom-0 mt-3
+    }
+    .page-item{
+      @apply w-11 border border-slate-600 text-center
+    }
+    .page-link{
+      @apply text-blue-400 w-full active:scale-95 transition-all duration-150
+    }
 }

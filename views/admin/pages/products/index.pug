@@ -1,28 +1,54 @@
 extends ../../layouts/default.pug
-
+include ../../mixins/search.pug
+include ../../mixins/filterStatus.pug
 block main 
-  table 
-    thead 
-      th STT
-      td ID
-      th Product's name 
-      th Image 
-      th source image 
-      th delete
-      th Action
-    tbody 
-      each product,index in products   
-            tr 
-            td(class="border border-white") #{index}
-            td(class="border border-white") #{product._id}
-            td(class="border border-white") #{product.title} 
-            td(class="border border-white") 
-                img(src=`product.thumbnail`, alt="img")
-            td(class="border border-white") #{product.thumbnail}
-            td(class="border border-white") #{product.delete}
-            td(class="flex") 
-                button(class="btn-primary") Fix 
-                if product.delete == true 
-                  button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
-                else 
-                  button(class="btn-danger") Delete
+  div
+    div 
+      p(class="text-2xl") List of products
+    div(class="flex items-center")
+      div(class="p-8 flex gap-3 ")
+        +filterStatus(btnClicked)
+      div 
+        +search(keySearch)
+        //- form( class="flex" id="form-search" method="GET") 
+        //-   input(type="text", name="keySearch" placeholder="Tim kiem o day" style="width: 200px; height: 40px" value=keySearch class="rounded-md")
+        //-   button(type="submit" class="btn-primary") search
+    div
+      if products.length > 0
+        table 
+          thead 
+            th(class="border border-white p-2") STT
+            th(class="border border-white p-2") Product's name 
+            th(class="border border-white p-2") Image 
+            th(class="border border-white p-2") Price
+            th(class="border border-white p-2") Status
+            th(class="border border-white p-2") Action
+          tbody 
+            each product,index in products   
+                tr 
+                  td(class="border border-white p-2") #{index+1}
+                  td(class="border border-white p-2") #{product.title} 
+                  td(class="border border-white p-2") 
+                      img(src=product.thumbnail, class="w-[100px] h-[80px]" alt="img")
+                  td(class="border border-white p-2") #{product.price}
+                  td(class="border border-white p-2 text-center ")
+                    if product.status == "active"
+                      button(class="btn-primary" id=product._id btn-isActive=product.status) Hoat dong
+                    else 
+                      button(class="btn-danger"  id=product._id btn-isActive=product.status) Dung hoat dong
+                  td(class="flex border border-white p-2") 
+                      button(class="btn-primary") Fix 
+                        if product.delete == true 
+                          button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
+                        else 
+                          button(class="btn-danger") Delete
+      else  
+        p There is nothing here
+  ul(class="pagination")
+    li(class="page-item")
+      button(class=`page-link default-btn" ${pagination.currentPage > 1 ? "" : "cursor-not-allowed "}` btn-navigation="prev" disabled= pagination.currentPage <= 1) prev
+    - for (var i=1; i<= pagination.totalPage; i++)
+      li(class=`page-item ${pagination.currentPage == i ? "active" : ""}`)
+        button(class="page-link default-btn" btn-Page=i) #{i}
+    li(class=`page-item`)
+      button(class=` page-link default-btn ${pagination.currentPage < pagination.totalPage ? "" : "cursor-not-allowed "}` btn-navigation="next" disabled= pagination.currentPage >= pagination.totalPage) next

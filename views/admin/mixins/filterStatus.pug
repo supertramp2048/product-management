@@ -1,0 +1,3 @@
+mixin filterStatus(btnClicked)
+   each item in btnClicked
+          button(class=`border border-green-500 p-3 text-red-700 rounded-md active:scale-95 transition-all duration-150 ${item.class}` btn-status=item.status) #{item.name}

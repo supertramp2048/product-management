@@ -1,3 +1,11 @@
 extends ../../layouts/default.pug
 block main
-  h1(class="text-red-700 text-3xl") Product page
+  div(class="grid grid-cols-4 gap-2")
+    each product in products
+      if product.status == "active"
+        div(class="flex-row")
+          div
+            img(src=product.thumbnail, alt=product.title)
+          div 
+            p(class="min-h-16") #{product.title}
+            p #{product.price}

@@ -13,7 +13,9 @@ mongoose.connect("mongodb://127.0.0.1:27017/product-test-01", {
 const productSchema = new mongoose.Schema({
     title: String,
     thumbnail: String,
-    delete: Boolean
+    delete: Boolean,
+    price: Number,
+    status: String
 })
 const Product = mongoose.model('product',productSchema , 'products')
 

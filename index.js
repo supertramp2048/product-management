@@ -6,6 +6,7 @@ const app = express()
 require('dotenv').config();
 const port = process.env.port;
 app.use(express.static("public"));
+app.use(express.json());
 app.set('view engine', "pug");
 app.set("views", "./views");
 // app local variables
