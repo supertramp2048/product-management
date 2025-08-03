@@ -56,21 +56,20 @@ module.exports.putProducts = async (req, res) => {
 module.exports.putAllProducts = async (req, res) => {
     //console.log(req.body);
     const statusAll = req.body.statusAll
-    const ids = req.body.ids
+    const ids = req.body.ids.split(", ")
     console.log("o day "+statusAll);
     console.log(ids);
     
-    // switch (statusAll) {
-    //     case "active":
-    //         await Products.updateMany({ _id: { $in: ids } }, { $set: { status: "active" }},{multi: true});
-    //         break;
-    //     case "inactive":
-    //         await Products.updateMany({ _id: { $in: ids } }, { status: "inactive" },{multi: true});
-    //         break;
-    //     default:
-    //         break;
-    // }
-
+    switch (statusAll) {
+        case "active":
+            await Products.updateMany({ _id: { $in: ids } }, { $set: { status: "active" }},{multi: true});
+            break;
+        case "inactive":
+            await Products.updateMany({ _id: { $in: ids } }, { status: "inactive" },{multi: true});
+            break;
+        default:
+            break;
+    }
     const backUrl = req.get("referer") || "/admin/products";
     res.redirect(backUrl)
 }

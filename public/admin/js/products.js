@@ -12,41 +12,56 @@ const checkItem = document.querySelectorAll('[check-item]')
 const inputIds = document.querySelector('[ids]')
 //o select de chon status 
 const selectOption = document.getElementById('choices')
-// them su kien cho nut check all
+//them su kien cho nut check all
 checkAll.addEventListener("change", () => {
+   // let ids = []
     if (checkAll.checked == true) {
         checkItem.forEach(item => {
             item.checked = true;
-            if (inputIds.value.includes(item.getAttribute('id') + ", ")) {
-                return
-            }
-            else {
-                inputIds.value += item.getAttribute('id') + ", ";
-            }
+            // if (ids.includes(item.getAttribute('id'))) {
+            //     return
+            // }
+            // else {
+            //     ids.push(item.getAttribute('id'))
+            // }
         })
     }
     else {
         checkItem.forEach(item => {
             item.checked = false
-            inputIds.value = ""
         })
+       // ids = []
     }
+  //  inputIds.value = ids.join(", ")
 })
 //
-checkItem.forEach(item => {
-    item.addEventListener("change", () => {
-        if (item.checked) {
-            inputIds.value += item.getAttribute('id') + ", ";
+// let ids = []
+// checkItem.forEach(item => {
+//     item.addEventListener("change", () => {
+//         if (item.checked) {
+//             ids.push(item.getAttribute('id'))
+//         }
+//         else {
+//             if (ids.includes(item.getAttribute('id'))) {
+//                 //console.log(item.getAttribute('id'));
+//                 ids.pop(item.getAttribute('id'))
+//             }
+//         }
+//         inputIds.value = ids.join(", ")
+//     })
+// })
+formChangeAll.addEventListener("submit", (e)=> {
+     //e.preventDefault()
+     let ids = []
+     checkItem.forEach(item => {
+        //console.log(item.id);
+        if(item.checked==true){
+          // console.log(item.id);
+           ids.push(item.id)
         }
-        else {
-            if (inputIds.value.includes(item.getAttribute('id') + ", ")) {
-                //console.log(item.getAttribute('id'));
-                inputIds.value = inputIds.value.replace(item.getAttribute('id') + ", ", "")
-            }
-        }
-    })
+     })
+     inputIds.value = ids.join(", ")
 })
-
 
 // day id va status cua san pham can thay doi status len
 if (btnIsActive.length > 0) {
