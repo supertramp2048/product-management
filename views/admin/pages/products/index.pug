@@ -10,13 +10,27 @@ block main
         +filterStatus(btnClicked)
       div 
         +search(keySearch)
-        //- form( class="flex" id="form-search" method="GET") 
-        //-   input(type="text", name="keySearch" placeholder="Tim kiem o day" style="width: 200px; height: 40px" value=keySearch class="rounded-md")
-        //-   button(type="submit" class="btn-primary") search
+    
     div
+      div(class="flex")
+        form(
+          class="flex"
+          action=`${prefixAdmin}/products/change-status-all?_method=PATCH`
+          method="POST"
+          id="form-change-status-all"
+          data-path=`${prefixAdmin}/products/change-status-all/`
+        )  
+          select#statusAll.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(class='focus:ring-blue-500 focus:border-blue-500 p-2.5 ' name="statusAll")
+            option(selected='') Choose a status
+            option(value='active') Active
+            option(value='inactive') Inactive
+          input(type="text" name="ids" ids value="" class="border rounded-md hidden")
+          button(type="submit" class="btn-primary" ) Change
       if products.length > 0
         table 
           thead 
+            th(class="border border-white p-2" ) 
+              input(type="checkbox" check-all)
             th(class="border border-white p-2") STT
             th(class="border border-white p-2") Product's name 
             th(class="border border-white p-2") Image 
@@ -26,6 +40,8 @@ block main
           tbody 
             each product,index in products   
                 tr 
+                  td(class="border border-white p-2")
+                    input(type="checkbox" check-item id=product._id)
                   td(class="border border-white p-2") #{index+1}
                   td(class="border border-white p-2") #{product.title} 
                   td(class="border border-white p-2") 
@@ -37,18 +53,36 @@ block main
                     else 
                       button(class="btn-danger"  id=product._id btn-isActive=product.status) Dung hoat dong
                   td(class="flex border border-white p-2") 
-                      button(class="btn-primary") Fix 
+                      button(class="btn-primary" btn-action="fix") Fix 
                         if product.delete == true 
                           button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
                         else 
-                          button(class="btn-danger") Delete
+                          button(class="btn-danger" btn-action="delete") Delete
       else  
         p There is nothing here
-  ul(class="pagination")
-    li(class="page-item")
-      button(class=`page-link default-btn" ${pagination.currentPage > 1 ? "" : "cursor-not-allowed "}` btn-navigation="prev" disabled= pagination.currentPage <= 1) prev
-    - for (var i=1; i<= pagination.totalPage; i++)
-      li(class=`page-item ${pagination.currentPage == i ? "active" : ""}`)
-        button(class="page-link default-btn" btn-Page=i) #{i}
-    li(class=`page-item`)
-      button(class=` page-link default-btn ${pagination.currentPage < pagination.totalPage ? "" : "cursor-not-allowed "}` btn-navigation="next" disabled= pagination.currentPage >= pagination.totalPage) next
+  if pagination.totalPage < 6 
+    ul(class="pagination")
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage > 1 ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="prev" disabled=pagination.currentPage <= 1) prev
+      - for (var i = 1; i <= pagination.totalPage; i++)
+        li(class=`page-item`)
+          button(class=`page-link default-btn  ${pagination.currentPage == i ? "active" : ""}` btn-Page=i) #{i}
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage < pagination.totalPage ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="next" disabled=pagination.currentPage >= pagination.totalPage) next
+  else
+    ul(class="pagination")
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage > 1 ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="prev" disabled=pagination.currentPage <= 1) prev
+      li(class="page-input-container")
+        form(class="flex items-center")
+          input(type="number" id="page" name="page" min="1" max=pagination.totalPage value=pagination.currentPage || 1 class="page-input")
+          span(class="page-total") / #{pagination.totalPage}
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage < pagination.totalPage ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="next" disabled=pagination.currentPage >= pagination.totalPage) next
+  form(
+    action=""
+    method="POST"
+    id="form-change-status"
+    data-path=`${prefixAdmin}/products/change-status/`
+    )
+  script(src="/admin/js/products.js")
