@@ -2,6 +2,8 @@ extends ../../layouts/default.pug
 include ../../mixins/search.pug
 include ../../mixins/filterStatus.pug
 block main 
+  include ../../particals/fixWindow.pug
+  include ../../particals/confirmDelete.pug
   div
     div 
       p(class="text-2xl") List of products
@@ -10,7 +12,6 @@ block main
         +filterStatus(btnClicked)
       div 
         +search(keySearch)
-    
     div
       div(class="flex")
         form(
@@ -18,13 +19,12 @@ block main
           action=`${prefixAdmin}/products/change-status-all?_method=PATCH`
           method="POST"
           id="form-change-status-all"
-          data-path=`${prefixAdmin}/products/change-status-all/`
         )  
           select#statusAll.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block.w-full(class='focus:ring-blue-500 focus:border-blue-500 p-2.5 ' name="statusAll")
             option(selected='') Choose a status
             option(value='active') Active
             option(value='inactive') Inactive
-          input(type="text" name="ids" ids value="" class="border rounded-md ")
+          input(type="text" name="ids" ids value="" class="border rounded-md hidden")
           button(type="submit" class="btn-primary" ) Change
       if products.length > 0
         table 
@@ -53,11 +53,11 @@ block main
                     else 
                       button(class="btn-danger"  id=product._id btn-isActive=product.status) Dung hoat dong
                   td(class="flex border border-white p-2") 
-                      button(class="btn-primary" btn-action="fix") Fix 
-                        if product.delete == true 
-                          button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
-                        else 
-                          button(class="btn-danger" btn-action="delete") Delete
+                      button(class="btn-primary" idProduct=product._id data-product=JSON.stringify(product) btn-action-fix="fix") Fix 
+                      if product.delete == true 
+                        button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
+                      else 
+                        button(class="btn-danger" idProduct=product._id data-product=JSON.stringify(product) btn-action-delete="delete") Delete
       else  
         p There is nothing here
   if pagination.totalPage < 6 

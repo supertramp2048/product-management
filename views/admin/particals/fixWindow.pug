@@ -1,0 +1,50 @@
+div(class="hidden" id="fixFormDiv" )  
+  div(class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 ")
+    div(class="bg-white rounded-2xl p-6 w-[500px] shadow-xl")
+        form(
+        idProduct=""
+        class="flex flex-col gap-4"
+        action=`${prefixAdmin}/products/fix-product?_method=PATCH`
+        method="POST"
+        id="form-fix-product"
+        )
+            table(class="w-full table-auto")
+                tbody
+                tr(class="hidden")
+                    td(class="w-1/3 font-semibold text-gray-700") 
+                        label(for="idFixForm") ID
+                    td 
+                        input(type="text" id="idFixForm" name="id" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500")
+                tr
+                    td(class="w-1/3 font-semibold text-gray-700") 
+                        label(for="titleFixForm") Title
+                    td 
+                        input(type="text" id="titleFixForm" name="title" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500")
+                tr
+                    td(class="font-semibold text-gray-700")
+                        label(for="imageFixForm") Thumbnail
+                    td
+                        input(type="text" id="imageFixForm" name="thumbnail" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500")
+                tr
+                    td(class="font-semibold text-gray-700")
+                        label(for="deletedFixForm") Deleted in client
+                    td
+                        select(name="deletedFixForm" id="deletedFixForm" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500")
+                            option(value="false") False
+                            option(value="true") True
+                tr
+                    td(class="font-semibold text-gray-700")
+                        label(for="statusFixForm") Status
+                    td
+                        select(name="statusFixForm" id="statusFixForm" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500")
+                            option(value="active") Active
+                            option(value="inactive") Inactive
+                tr
+                    td(class="w-1/3 font-semibold text-gray-700") 
+                        label(for="priceFixForm") Price
+                    td 
+                        input(type="text" id="priceFixForm" name="priceFixForm" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500")
+                tr
+                    td(colspan="2" class="pt-4 text-right")
+                        button(type="submit" class="btn-primary") OK
+                        button(type="button" id="btnCloseForm" class="btn-danger") close

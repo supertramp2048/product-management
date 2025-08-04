@@ -52,23 +52,71 @@ module.exports.putProducts = async (req, res) => {
     const backUrl = req.get("referer") || "/admin/products";
     res.redirect(backUrl)
 }
-//[PATCH] admin/products/change-status-all/:statusAll/:ids  doi status cua nhieu san pham
+//[PATCH] admin/products/change-status-all  doi status cua nhieu san pham
 module.exports.putAllProducts = async (req, res) => {
     //console.log(req.body);
     const statusAll = req.body.statusAll
     const ids = req.body.ids.split(", ")
-    console.log("o day "+statusAll);
+    console.log("o day " + statusAll);
     console.log(ids);
-    
+
     switch (statusAll) {
         case "active":
-            await Products.updateMany({ _id: { $in: ids } }, { $set: { status: "active" }},{multi: true});
+            if (statusAll && ids) {
+                await Products.updateMany({ _id: { $in: ids } }, { $set: { status: "active" } }, { multi: true });
+            }
+            else{
+                return
+            }
             break;
         case "inactive":
-            await Products.updateMany({ _id: { $in: ids } }, { status: "inactive" },{multi: true});
+            if (statusAll && ids) {
+                await Products.updateMany({ _id: { $in: ids } }, { status: "inactive" }, { multi: true });
+            }
+            else{
+                return
+            }
             break;
         default:
             break;
+    }
+    const backUrl = req.get("referer") || "/admin/products";
+    res.redirect(backUrl)
+}
+//[PATCH] admin/products/fix-product
+module.exports.fixProduct = async (req, res) => {
+    const id = req.body.id
+    const title = req.body.title
+    const thumbnail = req.body.thumbnail
+    const deletedFix = req.body.deletedFixForm
+    const statusFix = req.body.statusFixForm
+    const priceFix = req.body.priceFixForm
+   // const p = title + ", " + thumbnail + ", " + deletedFix + ", " + statusFix + ", " + priceFix
+    if(1){
+        await Products.updateOne(
+            {
+                _id: id
+            },
+            {
+               title: title,
+               thumbnail: thumbnail,
+               delete: deletedFix,
+               status: statusFix,
+               price: priceFix
+            }
+        )
+    }
+   // res.send(p)
+    const backUrl = req.get("referer") || "/admin/products";
+    res.redirect(backUrl)
+}
+module.exports.deleteProduct = async (req,res)=> {
+    const idDeleteProduct = req.body.idDeleteProduct
+    if(idDeleteProduct){
+        await Products.updateOne({_id: idDeleteProduct},{$set: {delete: true}})
+    }
+    else{
+        return
     }
     const backUrl = req.get("referer") || "/admin/products";
     res.redirect(backUrl)
