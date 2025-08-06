@@ -4,6 +4,7 @@ include ../../mixins/filterStatus.pug
 block main 
   include ../../particals/fixWindow.pug
   include ../../particals/confirmDelete.pug
+  include ../../particals/loadingIcon.pug
   div
     div 
       p(class="text-2xl") List of products
@@ -13,7 +14,7 @@ block main
       div 
         +search(keySearch)
     div
-      div(class="flex")
+      div(class="flex justify-between")
         form(
           class="flex"
           action=`${prefixAdmin}/products/change-status-all?_method=PATCH`
@@ -26,6 +27,14 @@ block main
             option(value='inactive') Inactive
           input(type="text" name="ids" ids value="" class="border rounded-md hidden")
           button(type="submit" class="btn-primary" ) Change
+        form(
+          class="flex"
+          action=`${prefixAdmin}/products/delete-all-products?_method=DELETE`
+          method="POST"
+          id="form-delete-all"
+        )  
+          input(type="text" name="idsDeleteAll" idsDeleteAll value="" class="border rounded-md hidden")
+          button(type="submit" class="btn-danger" ) Delete all 
       if products.length > 0
         table 
           thead 
@@ -47,7 +56,7 @@ block main
                   td(class="border border-white p-2") 
                       img(src=product.thumbnail, class="w-[100px] h-[80px]" alt="img")
                   td(class="border border-white p-2") #{product.price}
-                  td(class="border border-white p-2 text-center ")
+                  td(class="border border-white p-2 w-[160px] text-center ")
                     if product.status == "active"
                       button(class="btn-primary" id=product._id btn-isActive=product.status) Hoat dong
                     else 

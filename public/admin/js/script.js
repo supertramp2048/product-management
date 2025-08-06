@@ -1,7 +1,7 @@
 
 console.log("OK");
 const btnStatus = document.querySelectorAll('[btn-status]')
-const formSearch = document.querySelector('#form-search')
+const formSearch = document.getElementById('form-search')
 const btnPage = document.querySelectorAll('[btn-Page]')
 const btnNavigation = document.querySelectorAll('[btn-navigation]')
 
@@ -50,19 +50,14 @@ btnPage.forEach(item => {
 // loc theo status
 if (btnStatus.length > 0) {
     let url = new URL(window.location.href)
-
     btnStatus.forEach(btn => {
         btn.addEventListener('click', () => {
             const status = btn.getAttribute("btn-status");
             if (status) {
                 url.searchParams.set("status", status);
-                //console.log(url.href);
-
             }
             else {
                 url.searchParams.delete("status")
-                // console.log(url);
-
             }
 
             window.location.href = url.href

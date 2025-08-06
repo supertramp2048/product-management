@@ -57,9 +57,6 @@ module.exports.putAllProducts = async (req, res) => {
     //console.log(req.body);
     const statusAll = req.body.statusAll
     const ids = req.body.ids.split(", ")
-    console.log("o day " + statusAll);
-    console.log(ids);
-
     switch (statusAll) {
         case "active":
             if (statusAll && ids) {
@@ -113,11 +110,17 @@ module.exports.fixProduct = async (req, res) => {
 module.exports.deleteProduct = async (req,res)=> {
     const idDeleteProduct = req.body.idDeleteProduct
     if(idDeleteProduct){
-        await Products.updateOne({_id: idDeleteProduct},{$set: {delete: true}})
+        await Products.updateOne({_id: idDeleteProduct},{$set: {delete: true, deletedAt: new Date()}})
     }
     else{
         return
     }
+    const backUrl = req.get("referer") || "/admin/products";
+    res.redirect(backUrl)
+}
+module.exports.deleteAllProducts = async (req,res) => {
+    const ids = req.body.idsDeleteAll.split(", ")
+    await Products.updateMany({_id: {$in: ids}},{delete: true})
     const backUrl = req.get("referer") || "/admin/products";
     res.redirect(backUrl)
 }
