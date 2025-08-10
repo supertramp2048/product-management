@@ -16,8 +16,11 @@ const productSchema = new mongoose.Schema({
     delete: Boolean,
     price: Number,
     status: String,
-    deletedAt: Date
+    deletedAt: Date,
+    description: String,
+    discountPercentage: Number,
+    stock: Number,
+    position: Number
 })
 const Product = mongoose.model('product',productSchema , 'products')
-
 module.exports = Product

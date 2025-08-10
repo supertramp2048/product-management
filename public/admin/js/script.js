@@ -4,6 +4,24 @@ const btnStatus = document.querySelectorAll('[btn-status]')
 const formSearch = document.getElementById('form-search')
 const btnPage = document.querySelectorAll('[btn-Page]')
 const btnNavigation = document.querySelectorAll('[btn-navigation]')
+// show alert
+const showAlert = document.querySelector('[show-success-alert]')
+if (showAlert) {
+    setTimeout(
+        alertTimeOut
+        , parseInt(showAlert.getAttribute("data-time")))
+}
+function alertTimeOut() {
+    showAlert.classList.add("hidden")
+}
+// end show alert
+ // them su kien cho close alert button 
+    const closeAlert = document.querySelector("[close-alert-btn]")
+    if (closeAlert) {
+        closeAlert.addEventListener("click", () => {
+           showAlert.classList.add("hidden")
+        })
+    }
 
 // them su kien nut prev , next trong phan trang
 btnNavigation.forEach(item => {
@@ -25,9 +43,9 @@ btnNavigation.forEach(item => {
             if (currentPage) {
                 const nextPage = currentPage + 1;
                 url.searchParams.set("page", nextPage)
-                
+
             }
-            else{
+            else {
                 const nextPage = 2;
                 url.searchParams.set("page", nextPage)
             }

@@ -30,22 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeFormBtn = document.getElementById("btnCloseForm")
     // lay the chua form fix
     const fixFormDiv = document.getElementById("fixFormDiv")
-    // lay form deleteAll
-    const deleteAllForm = document.getElementById("form-delete-all")
-    const {idsDeleteAll} = deleteAllForm
-    
-    deleteAllForm.addEventListener("submit", ()=> {
-        loaderDiv.classList.remove("hidden")
-        let ids = []
-        checkItem.forEach(item => {
-            //console.log(item.id);
-            if (item.checked == true) {
-                // console.log(item.id);
-                ids.push(item.id)
-            }
-        })
-        idsDeleteAll.value = ids.join(", ")
-    })
+
     //them loader khi submit form confirm delete
     confirmDeleteForm.addEventListener("submit", () => {
         loaderDiv.classList.remove("hidden")
@@ -53,9 +38,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     // lay form fixProduct
     const fixForm = document.getElementById("form-fix-product")
-    const { idFixForm, title, thumbnail, deletedFixForm, statusFixForm, priceFixForm } = fixForm.elements
-    fixForm.addEventListener("submit",()=>{
-         loaderDiv.classList.remove("hidden")
+    const { idFixForm, title, thumbnail, deletedFixForm, statusFixForm, priceFixForm,positionFixForm } = fixForm.elements
+    fixForm.addEventListener("submit", () => {
+        loaderDiv.classList.remove("hidden")
     })
     // them su kien cho delete button
     deleteBtn.forEach(item => {
@@ -83,6 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
             deletedFixForm.value = product.delete
             statusFixForm.value = product.status
             priceFixForm.value = product.price
+            positionFixForm.value = product.position
         })
     })
     closeFormBtn.addEventListener("click", () => {
@@ -102,19 +88,39 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         }
     })
-    // them su kien submit cho form sua status 
-    formChangeAll.addEventListener("submit", () => {
-        //e.preventDefault()
-        loaderDiv.classList.remove("hidden")
+    // them su kien submit cho form sua status, xoa tat ca, doi position cua product
+    formChangeAll.addEventListener("submit", function (e) {
+        e.preventDefault()
         let ids = []
+        if (statusAll.value == "changePosition") {
+            checkItem.forEach(item => {
+                //console.log(item.id);
+                if (item.checked == true) {
+                    e.preventDefault()
+                    const position = item.closest("tr").querySelector("input[name='positionInput']").value
+                    id = item.id + "-"+ position
+                    ids.push(id)
+                }
+            })
+            inputIds.value = ids.join(", ")
+            this.submit()
+        }
+        else {
         checkItem.forEach(item => {
             //console.log(item.id);
             if (item.checked == true) {
-                // console.log(item.id);
                 ids.push(item.id)
             }
         })
-        inputIds.value = ids.join(", ")
+        if (ids.length > 0) {
+            inputIds.value = ids.join(", ")
+            this.submit()
+        }
+        else {
+            alert("you should choose at least one product")
+        }
+    }
+     
     })
 
     // day id va status cua san pham can thay doi status len

@@ -1,5 +1,10 @@
 extends ../../layouts/default.pug
+include ../../mixins/search.pug
 block main
+  div(class="flex")
+    +search(keySearch)
+    if products.length < 1
+      include ../../partials/notFoundPage.pug   
   div(class="grid grid-cols-4 gap-2")
     each product in products
       if product.status == "active"
@@ -9,3 +14,22 @@ block main
           div 
             p(class="min-h-16") #{product.title}
             p #{product.price}
+  if pagination.totalPage < 6 
+    ul(class="pagination")
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage > 1 ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="prev" disabled=pagination.currentPage <= 1) prev
+      - for (var i = 1; i <= pagination.totalPage; i++)
+        li(class=`page-item`)
+          button(class=`page-link default-btn  ${pagination.currentPage == i ? "active" : ""}` btn-Page=i) #{i}
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage < pagination.totalPage ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="next" disabled=pagination.currentPage >= pagination.totalPage) next
+  else
+    ul(class="pagination")
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage > 1 ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="prev" disabled=pagination.currentPage <= 1) prev
+      li(class="page-input-container")
+        form(class="flex items-center")
+          input(type="number" id="page" name="page" min="1" max=pagination.totalPage value=pagination.currentPage || 1 class="page-input")
+          span(class="page-total") / #{pagination.totalPage}
+      li(class="page-item")
+        button(class=`page-link default-btn ${pagination.currentPage < pagination.totalPage ? "" : "cursor-not-allowed opacity-50"}` btn-navigation="next" disabled=pagination.currentPage >= pagination.totalPage) next

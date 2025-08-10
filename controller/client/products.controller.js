@@ -1,16 +1,35 @@
 const Products = require("../../models/product.model")
-module.exports.products= async(req,res)=> {
-    console.log(req.query.status);
-    
+const search = require("../../helper/search")
+module.exports.products = async (req, res) => {
     let find = {
-       delete: false
+        delete: false,
+        status: "active"
     };
-    if(req.query.status){
+    let objectPagination = {
+        currentPage: 1,
+        limitItems: 4
+    }
+    if (isNaN(req.query.page)) {
+        objectPagination.currentPage = 1
+    }
+    else {
+        objectPagination.currentPage = req.query.page
+    }
+    if (req.query.status) {
         find.status = req.query.status
     }
+    let searchObject = search(req.query)
+    if (searchObject.keySearch) {
+        find.title = searchObject.regex
+    }
 
-    const products = await Products.find(find)
-    res.render("client/pages/products/index.pug",{
-       products: products
+    objectPagination.totalPage = Math.ceil(await Products.find(find).countDocuments() / objectPagination.limitItems)
+    objectPagination.skipItems = (objectPagination.currentPage - 1) * objectPagination.limitItems
+    //console.log(objectPagination.totalPage);
+    const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skipItems).sort({position: 1})
+    res.render("client/pages/products/index.pug", {
+        products: products,
+        pagination: objectPagination,
+        keySearch: searchObject.keySearch
     });
 } 

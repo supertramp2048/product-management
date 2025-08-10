@@ -1,4 +1,4 @@
-module.exports = (query,find) => {
+module.exports = (query) => {
     let objectSearch = {
         keySearch: ""
     }
