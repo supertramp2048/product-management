@@ -4,6 +4,25 @@ const btnStatus = document.querySelectorAll('[btn-status]')
 const formSearch = document.getElementById('form-search')
 const btnPage = document.querySelectorAll('[btn-Page]')
 const btnNavigation = document.querySelectorAll('[btn-navigation]')
+//
+// function previewFile() {
+//         var preview = document.querySelector('[previewImage]')
+//         var file = document.querySelector('input[type=file]').files[0]
+//         console.log(file);
+        
+//         var reader = new FileReader();
+
+//         reader.onloadend = function () {
+//             preview.src = reader.result
+//         }
+
+//         if(file) {
+//             reader.readAsDataURL(file)
+//         }
+//         else{
+//             preview.src =""
+//         }
+//     }
 // show alert
 const showAlert = document.querySelector('[show-success-alert]')
 if (showAlert) {

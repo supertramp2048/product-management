@@ -117,7 +117,10 @@ module.exports.fixProduct = async (req, res) => {
     const deletedFix = req.body.deletedFixForm
     const statusFix = req.body.statusFixForm
     const priceFix = req.body.priceFixForm
-    const position = req.body.positionFixForm
+    const positionFix = req.body.positionFixForm
+    const descriptionFix = req.body.descriptionFixForm
+    const stockFix = req.body.stockFixForm    
+    const discountFix = req.body.discountFixForm
     // const p = title + ", " + thumbnail + ", " + deletedFix + ", " + statusFix + ", " + priceFix
     if (1) {
         await Products.updateOne(
@@ -129,8 +132,12 @@ module.exports.fixProduct = async (req, res) => {
                 thumbnail: thumbnail,
                 delete: deletedFix,
                 status: statusFix,
-                position: position,
-                price: priceFix
+                position: positionFix,
+                price: priceFix,
+                discountPercentage: discountFix,
+                description: descriptionFix,
+                stock: stockFix,
+                updateAt: this.updateAt
             }
         )
     }
@@ -173,18 +180,27 @@ module.exports.newProduct = async (req,res) => {
 }
 module.exports.createNewProduct = async (req,res) =>{
     let title = req.body.title
-    let thumbnail = req.body.thumbnail
     let deleted = req.body.deleted
     let status = req.body.status 
     let price = req.body.price 
     let position = req.body.position
+    let description = req.body.descriptionCreateForm
+    let stock = req.body.stock
+    let discount = req.body.discount
+    req.body.thumbnail = `/uploads/${req.file.filename}`
+    console.log(req.body.thumbnail);
+    let thumbnail = req.body.thumbnail
     await Products.insertOne({
         title: title,
         thumbnail: thumbnail,
         delete: deleted,
         status: status,
         price: price,
-        position: position
+        position: position,
+        description: description,
+        stock: stock,
+        discountPercentage: discount,
+        createAt: this.createAt
     })
     req.flash("success","Add a new product successfully")
     const backUrl = req.get("referer") || "/admin/products";

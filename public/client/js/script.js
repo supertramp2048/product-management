@@ -9,6 +9,17 @@ const divLoader = document.getElementById("divLoader")
 formSearch.addEventListener("submit", () => {
     divLoader.classList.remove("hidden")
 })
+// xu ly phan trang khi an nut chuyen trang
+const btnPagination = document.querySelectorAll('[btn-Page]')
+btnPagination.forEach(item => {
+    item.addEventListener("click",() =>{
+        const pageNum= item.getAttribute("btn-Page")
+        let url = new URL(window.location.href)
+        url.searchParams.set("page",pageNum)
+        window.location.href = url.href
+    })
+})
+
 // Xử lý phân trang khi bấm nút prev / next
 PaginationBtn.forEach(item => {
     item.addEventListener("click", () => {

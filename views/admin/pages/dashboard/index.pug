@@ -1,4 +1,6 @@
 extends ../../layouts/default.pug
+include ../../mixins/alertSuccess.pug
 
 block main 
+  +alertSuccess(3000)
   h1 Trang tong quan

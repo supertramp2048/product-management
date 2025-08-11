@@ -1,5 +1,5 @@
 //console.log('OK');
-document.addEventListener("DOMContentLoaded", () => {
+// document.addEventListener("DOMContentLoaded", () => {
     const btnIsActive = document.querySelectorAll('[btn-isActive]')
     const formChange = document.getElementById("form-change-status")
     const formChangeAll = document.getElementById("form-change-status-all")
@@ -30,7 +30,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeFormBtn = document.getElementById("btnCloseForm")
     // lay the chua form fix
     const fixFormDiv = document.getElementById("fixFormDiv")
+    function previewFile(){
+        var preview = document.querySelector('[previewImage]')
+        var file = document.querySelector('input[type=file]').files[0]
+        var reader = new FileReader();
 
+        reader.onloadend = function () {
+            preview.src = reader.result
+        }
+
+        if(file) {
+            reader.readAsDataURL(file)
+        }
+        else{
+            preview.src =""
+        }
+    }
     //them loader khi submit form confirm delete
     confirmDeleteForm.addEventListener("submit", () => {
         loaderDiv.classList.remove("hidden")
@@ -136,4 +151,4 @@ document.addEventListener("DOMContentLoaded", () => {
             })
         })
     }
-});
+// });

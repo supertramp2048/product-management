@@ -1,8 +1,18 @@
 const express = require('express')
+// ----
+// nhúng file index của router client
 const route = require("./routers/client/index.router")
+//---
+// nhúng file index của router admin
 const adminRoute = require("./routers/admin/index.router")
+// ------
+// các config của hệ thống như biến prefixAdmin
 const systemConfix = require("./config/system");
+// --------
+// gói để override các method khi gửi form , bởi vì trong html thuần chỉ có thể dùng 2 phương thức là GET và POST
 const methodOverride = require('method-override');
+// --------
+// body-parser để phân tích dữ liệu từ body của request trước khi xử lý (lấy thông tin từ các trường input của Form bằng câu lệnh req.body.<tên của ô input trong form>)
 const bodyParser = require("body-parser")
 const app = express()
 // flash

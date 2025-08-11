@@ -1,5 +1,7 @@
 
 const mongoose = require('mongoose')
+var slug = require('mongoose-slug-updater');
+mongoose.plugin(slug)
 // mongoose.connect('mongodb://127.0.0.1:27017/product-test-01')
 mongoose.connect("mongodb://127.0.0.1:27017/product-test-01", {
     useNewUrlParser: true,
@@ -12,6 +14,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/product-test-01", {
     });
 const productSchema = new mongoose.Schema({
     title: String,
+    slug: {type: String, slug:"title"},
     thumbnail: String,
     delete: Boolean,
     price: Number,
@@ -20,7 +23,11 @@ const productSchema = new mongoose.Schema({
     description: String,
     discountPercentage: Number,
     stock: Number,
-    position: Number
-})
+    position: Number,
+    updateAt: Date,
+    createAt: Date
+},
+{timestamps: true})
 const Product = mongoose.model('product',productSchema , 'products')
+
 module.exports = Product
