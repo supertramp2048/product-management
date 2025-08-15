@@ -1,9 +1,10 @@
-
+require('dotenv').config();
+const mongoURL = process.env.MONGO_URL
 const mongoose = require('mongoose')
 var slug = require('mongoose-slug-updater');
 mongoose.plugin(slug)
 // mongoose.connect('mongodb://127.0.0.1:27017/product-test-01')
-mongoose.connect("mongodb://127.0.0.1:27017/product-test-01", {
+mongoose.connect(mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
