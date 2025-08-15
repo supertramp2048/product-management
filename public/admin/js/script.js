@@ -4,26 +4,8 @@ const btnStatus = document.querySelectorAll('[btn-status]')
 const formSearch = document.getElementById('form-search')
 const btnPage = document.querySelectorAll('[btn-Page]')
 const btnNavigation = document.querySelectorAll('[btn-navigation]')
-//
-// function previewFile() {
-//         var preview = document.querySelector('[previewImage]')
-//         var file = document.querySelector('input[type=file]').files[0]
-//         console.log(file);
-        
-//         var reader = new FileReader();
 
-//         reader.onloadend = function () {
-//             preview.src = reader.result
-//         }
-
-//         if(file) {
-//             reader.readAsDataURL(file)
-//         }
-//         else{
-//             preview.src =""
-//         }
-//     }
-// show alert
+// show alert success
 const showAlert = document.querySelector('[show-success-alert]')
 if (showAlert) {
     setTimeout(
@@ -33,7 +15,18 @@ if (showAlert) {
 function alertTimeOut() {
     showAlert.classList.add("hidden")
 }
-// end show alert
+// -------------
+// show alert fail
+const showAlertFail = document.querySelector('[show-fail-alert]')
+if (showAlertFail) {
+    setTimeout(
+        alertTimeOutFail
+        , parseInt(showAlertFail.getAttribute("data-time")))
+}
+function alertTimeOutFail() {
+    showAlertFail.classList.add("hidden")
+}
+// ---------
  // them su kien cho close alert button 
     const closeAlert = document.querySelector("[close-alert-btn]")
     if (closeAlert) {

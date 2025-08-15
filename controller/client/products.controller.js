@@ -33,3 +33,14 @@ module.exports.products = async (req, res) => {
         keySearch: searchObject.keySearch
     });
 } 
+module.exports.productDetail = async (req,res) => {
+    let find = {
+        _id: req.params.id,
+        status: "active"
+    }
+    // let id = req.params.id
+    var product = await Products.findOne(find)
+    res.render("client/pages/products/productDetail.pug",{
+        product: product
+    })
+}

@@ -1,0 +1,31 @@
+extends ../../layouts/default.pug
+
+block main  
+  div(class="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md")
+    h1(class="text-3xl font-bold mb-6 text-center text-gray-800") Chi tiết sản phẩm
+
+    // Thông tin sản phẩm
+    div(class="flex flex-col md:flex-row gap-6 items-start")
+      img(src=product.thumbnail class="w-full md:w-[300px] h-[300px] object-cover rounded-lg shadow" alt="")
+
+      div(class="flex-1 space-y-3")
+        h2(class="text-2xl font-semibold text-gray-900") #{product.title}
+        p(class="text-gray-700") #{product.description}
+        p(class="text-gray-600") 
+          span(class="font-semibold") Discount: 
+          | #{product.discountPercentage}%
+        p(class="text-gray-600") 
+          span(class="font-semibold") Vị trí: 
+          | #{product.position}
+        p(class="text-gray-600") 
+          span(class="font-semibold") Số lượng trong kho: 
+          | #{product.stock}
+
+        if product.status == "active"
+          button(class="btn-primary mt-2") Status: Active
+        else
+          button(class="btn-danger mt-2") Status: Inactive
+
+    // Nút chỉnh sửa
+    div(class="mt-6 text-right")
+      a(href=`/admin/products/fixProduct/${product.id}` class="btn-primary") Fix Product

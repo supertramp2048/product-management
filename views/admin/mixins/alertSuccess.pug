@@ -5,7 +5,7 @@ mixin alertSuccess(time)
                 button(class="bg-red-600 text-white font-semibold py-1 px-3 rounded-lg hover:bg-red-400 active:scale-95 transition-all duration-150 absolute top-0 right-0 " close-alert-btn) x
 
 mixin alertFail(time)
-    - if(messages.success)
+    - if(messages.error)
             div(class="alertFail" data-time=time show-fail-alert role='alert')
-                span= messages.success
+                span= messages.error
                 button(class="bg-red-600 text-white font-semibold py-1 px-3 rounded-lg hover:bg-red-400 active:scale-95 transition-all duration-150 absolute top-0 right-0 " close-alert-btn) x

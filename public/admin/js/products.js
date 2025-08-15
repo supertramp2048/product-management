@@ -28,11 +28,12 @@
     const { idDeleteProduct } = confirmDeleteForm.elements
     // lay nut dong form fix
     const closeFormBtn = document.getElementById("btnCloseForm")
-    // lay the chua form fix
-    const fixFormDiv = document.getElementById("fixFormDiv")
+    // hàm cho xem truoc anh khi upload len server 
     function previewFile(){
         var preview = document.querySelector('[previewImage]')
         var file = document.querySelector('input[type=file]').files[0]
+       // console.log(file);
+        
         var reader = new FileReader();
 
         reader.onloadend = function () {
@@ -51,16 +52,12 @@
         loaderDiv.classList.remove("hidden")
         //confirmDeleteForm.classList.remove("hidden")
     })
-    // lay form fixProduct
-    const fixForm = document.getElementById("form-fix-product")
-    const { idFixForm, title, thumbnail, deletedFixForm, statusFixForm, priceFixForm,positionFixForm } = fixForm.elements
-    fixForm.addEventListener("submit", () => {
-        loaderDiv.classList.remove("hidden")
-    })
     // them su kien cho delete button
     deleteBtn.forEach(item => {
         item.addEventListener("click", () => {
             confirmDeleteDiv.classList.remove("hidden")
+            console.log("delete btn");
+            
             const product = JSON.parse(item.dataset.product)
             idDeleteProduct.value = product._id
         })
@@ -85,9 +82,6 @@
             priceFixForm.value = product.price
             positionFixForm.value = product.position
         })
-    })
-    closeFormBtn.addEventListener("click", () => {
-        fixFormDiv.classList.add("hidden")
     })
     //them su kien cho nut check all
     checkAll.addEventListener("change", () => {
@@ -152,3 +146,4 @@
         })
     }
 // });
+// validate cho form tao san pham moi

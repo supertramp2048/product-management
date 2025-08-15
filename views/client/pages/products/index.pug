@@ -10,7 +10,8 @@ block main
       if product.status == "active"
         div(class="flex-row")
           div
-            img(src=product.thumbnail, alt=product.title)
+            a(href=`products/productDetail/${product.slug}/${product._id}`) 
+              img(src=product.thumbnail, alt=product.title)
           div 
             p(class="min-h-16") #{product.title}
             p #{product.price}
