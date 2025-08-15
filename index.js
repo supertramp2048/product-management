@@ -27,10 +27,10 @@ require('dotenv').config();
 const port = process.env.port;
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
-app.use(express.static("public"));
+app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.set('view engine', "pug");
-app.set("views", "./views");
+app.set("views", `${__dirname}/views`);
 app.use(methodOverride('_method'))
 // app local variables
 app.locals.prefixAdmin = systemConfix.prefixAdmin;
