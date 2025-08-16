@@ -1,16 +1,9 @@
 const express = require('express')
+// khai bao storage cloundinary
+const { storage } = require('../../storage/storage');
 // khai bao multer de upload anh
 const multer = require('multer')
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/uploads')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now()
-    cb(null, uniqueSuffix + '-' + file.originalname)
-  }
-})
-const upload = multer({ storage: storage })
+const upload = multer({ storage })
 // -----
 // khai bao bien router
 const router = express.Router()

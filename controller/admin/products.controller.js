@@ -172,8 +172,10 @@ module.exports.createNewProduct = async (req, res) => {
     let discount = req.body.discount
     // validate file
     // if (req.file.filename) {
-    req.body.thumbnail = `/uploads/${req.file.filename}`
+    req.body.thumbnail = `${req.file.path}`
     let thumbnail = req.body.thumbnail
+    console.log(typeof(thumbnail));
+    
     // }
     // else {
     //     req.flash("error", "vui long nhap anh san pham")
