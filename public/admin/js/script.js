@@ -110,3 +110,19 @@ formSearch.addEventListener('submit', (e) => {
     }
 
 })
+// them su kien cho o select sort
+const clearSortBtn = document.querySelector('[btnClearSort]')
+clearSortBtn.addEventListener("click",()=>{
+    var url = new URL(window.location.href)
+    url.searchParams.delete('sort')
+    window.location.href=url.href
+})
+
+const sortChoice = document.querySelector('[name="sortProducts"]')
+sortChoice.addEventListener("change", ()=>{
+    let choice = sortChoice.value
+    let url = new URL(window.location.href)
+    url.searchParams.set('sort',choice)
+    window.location.href=url.href
+})
+// them su kien cho 

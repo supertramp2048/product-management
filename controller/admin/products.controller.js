@@ -17,6 +17,46 @@ module.exports.getProducts = async (req, res) => {
     if (req.query.status) {
         find.status = req.query.status
     }
+    // sort products 
+    let sortChoice = req.query.sort
+    let sortObj = {}
+        switch(sortChoice){
+            case "positionIncrease":
+                sortObj={
+                    position: 1
+                }
+                break;
+            case "positionDecrease":
+                sortObj={
+                    position: -1
+                }
+                break;
+            case "priceIncrease":
+                sortObj={
+                    price: 1
+                }
+                break;
+            case "priceDecrease":
+                sortObj={
+                    price: -1
+                }
+                break;
+            case "titleAZ":
+                sortObj={
+                    title: 1
+                }
+                break;
+            case "titleZA":
+                sortObj={
+                    title: -1
+                }
+                break;
+            default:
+                sortObj={
+                    position: 1
+                }
+        }
+    
     // pagination 
     let objectPagination = {
         currentPage: 1,
@@ -34,12 +74,13 @@ module.exports.getProducts = async (req, res) => {
     const totalPage = Math.ceil(numberOfProduct / objectPagination.limitItems)
     objectPagination.totalPage = totalPage
     // console.log("number of page is "+totalPage);
-    const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip).sort({ position: 1 })
+    const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip).sort(sortObj)
     res.render("admin/pages/products/index.pug", {
         products: products,
         btnClicked: btnClicked,
         keySearch: searchObject.keySearch,
-        pagination: objectPagination
+        pagination: objectPagination,
+        sortChoice:sortChoice 
     });
 }
 // [PATCH] admin/products/change-status/:status/:id  doi status cua mot san pham 

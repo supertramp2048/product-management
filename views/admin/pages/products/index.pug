@@ -31,45 +31,56 @@ block main
           input(type="text" name="ids" ids value="" class="border rounded-md hidden")
           button(type="submit" class="btn-primary" ) Change 
         a(href=`${prefixAdmin}/products/newProduct` class="p-4 border border-green-600 rounded-lg active:bg-green-500") + add new product
-      if products.length > 0
-        table 
-          thead 
-            th(class="border border-white p-2" ) 
-              input(type="checkbox" check-all)
-            th(class="border border-white p-2") STT
-            th(class="border border-white p-2") Product's name 
-            th(class="border border-white p-2") Image 
-            th(class="border border-white p-2") Price
-            th(class="border border-white p-2") Position
-            th(class="border border-white p-2") Status
-            th(class="border border-white p-2") Action
-          tbody 
-            each product,index in products   
-                tr 
-                  td(class="border border-white p-2")
-                    input(type="checkbox" check-item id=product._id)
-                  td(class="border border-white p-2") #{index+1}
-                  td(class="border border-white p-2") #{product.title} 
-                  td(class="border border-white p-2") 
-                      img(src=product.thumbnail, class="w-[100px] h-[80px]" alt="img")
-                  td(class="border border-white p-2") #{product.price}
-                  td(class="border border-white p-2")
-                    input(type="number" name="positionInput" min=1 id="positionInput" class="w-[50px]" value=product.position)
-                  td(class="border border-white p-2 w-[160px] text-center ")
-                    if product.status == "active"
-                      button(class="btn-primary" id=product._id btn-isActive=product.status) Hoat dong
-                    else 
-                      button(class="btn-danger"  id=product._id btn-isActive=product.status) Dung hoat dong
-                  td(class="flex border border-white p-2") 
-                      a(href=`${prefixAdmin}/products/fixProduct/${product._id}` class="btn-primary mr-1") Fix
-                      a(href=`${prefixAdmin}/products/productDetail/${product._id}` class="btn-primary mr-1") Detail
-                      //-button(class="btn-primary" idProduct=product._id data-product=JSON.stringify(product) btn-action-fix="fix") Fix 
-                      if product.delete == true 
-                        button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
+      div
+        select#statusAll.bg-gray-50.border.border-gray-300.text-gray-900.text-sm.rounded-lg.block(class='focus:ring-blue-500 focus:border-blue-500 p-2.5 ' name="sortProducts" )
+          option(selected='') Choose an action 
+          option(value="positionIncrease" selected = sortChoice =="positionIncrease" ) Vi tri tang dan
+          option(value="positionDecrease" selected = sortChoice =="positionDecrease") Vi tri giam dan  
+          option(value="priceIncrease" selected = sortChoice =="priceIncrease") Gia tang dan 
+          option(value="priceDecrease" selected = sortChoice =="priceDecrease") Gia giam dan 
+          option(value="titleAZ" selected = sortChoice =="titleAZ") Tieu de A - Z 
+          option(value="titleZA" selected = sortChoice =="titleZA") Tieu de Z - A   
+        button(class="btn-danger" btnClearSort) Clear
+        if products.length > 0
+          table 
+            thead 
+              th(class="border border-white p-2" ) 
+                input(type="checkbox" check-all)
+              th(class="border border-white p-2") STT
+              th(class="border border-white p-2") Product's name 
+              th(class="border border-white p-2") Image 
+              th(class="border border-white p-2") Price
+              th(class="border border-white p-2") Position
+              th(class="border border-white p-2") Status
+              th(class="border border-white p-2") Action
+            tbody 
+              each product,index in products   
+                  tr 
+                    td(class="border border-white p-2")
+                      input(type="checkbox" check-item id=product._id)
+                    td(class="border border-white p-2") #{index+1}
+                    td(class="border border-white p-2") #{product.title} 
+                    td(class="border border-white p-2") 
+                        img(src=product.thumbnail, class="w-[100px] h-[80px]" alt="img")
+                    td(class="border border-white p-2") #{product.price}
+                    td(class="border border-white p-2")
+                      input(type="number" name="positionInput" min=1 id="positionInput" class="w-[50px]" value=product.position)
+                    td(class="border border-white p-2 w-[160px] text-center ")
+                      if product.status == "active"
+                        button(class="btn-primary" id=product._id btn-isActive=product.status) Hoat dong
                       else 
-                        button(class="btn-danger" idProduct=product._id data-product=JSON.stringify(product) btn-action-delete="delete") Delete
-      else  
-        p There is nothing here
+                        button(class="btn-danger"  id=product._id btn-isActive=product.status) Dung hoat dong
+                    td(class="flex border border-white p-2") 
+                        a(href=`${prefixAdmin}/products/fixProduct/${product._id}` class="btn-primary mr-1") Fix
+                        a(href=`${prefixAdmin}/products/productDetail/${product._id}` class="btn-primary mr-1") Detail
+                        //-button(class="btn-primary" idProduct=product._id data-product=JSON.stringify(product) btn-action-fix="fix") Fix 
+                        if product.delete == true 
+                          button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
+                        else 
+                          button(class="btn-danger" idProduct=product._id data-product=JSON.stringify(product) btn-action-delete="delete") Delete
+        else  
+          p There is nothing here
+  //-- nut phan trang
   if pagination.totalPage < 6 
     ul(class="pagination")
       li(class="page-item")
