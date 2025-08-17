@@ -48,6 +48,15 @@ block main
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="descripttion of product "
                 ) 
+            td(class="font-semibold text-gray-700 py-3")
+              label(for="thumbnail") Descriptionabc
+            td(class="py-3")
+              textarea(
+                name="descriptionCreateFormabc"
+                id="descriptionCreateFormabc"
+                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="descripttion of product "
+                ) 
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3")
               label(for="deleted") Deleted in client
@@ -138,3 +147,5 @@ block main
                 id="submit-btn"
               ) Create Product
   script(src="/admin/js/products.js")
+  script(src="/tinymce/tinymce.min.js")
+  script(src="/admin/js/my-tinymce-config.js")

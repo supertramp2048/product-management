@@ -10,7 +10,7 @@ block main
 
       div(class="flex-1 space-y-3")
         h2(class="text-2xl font-semibold text-gray-900") #{product.title}
-        p(class="text-gray-700") #{product.description}
+        p(class="text-gray-700") !{product.description}
         p(class="text-gray-600") 
           span(class="font-semibold") Discount: 
           | #{product.discountPercentage}%
