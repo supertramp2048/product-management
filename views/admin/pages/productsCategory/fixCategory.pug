@@ -4,13 +4,13 @@ block main
   +alertSuccess(3000)
   +alertFail(3000)
   div(class="container mx-auto p-6")
-    h1(class="text-2xl font-bold text-gray-800 mb-6") Create New Product
+    h1(class="text-2xl font-bold text-gray-800 mb-6") Fix Category
     form(
         class="bg-white shadow-md rounded-lg p-6"
-        action=`${prefixAdmin}/products/createNewProduct`
+        action=`${prefixAdmin}/productsCategory/fixCategory/${Category._id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
-        id="form-create-product"
+        id="form-fix-category"
     )
       table(class="w-full table-auto")
         tbody
@@ -23,7 +23,20 @@ block main
                 id="title" 
                 name="title" 
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter product title"
+                placeholder="Enter category title"
+                value=Category.title
+              )
+          tr(class="leading-10")
+            td(class="w-1/3 font-semibold text-gray-700 py-3") 
+              label(for="title") Parent ID *
+            td(class="py-3") 
+              input(
+                type="text" 
+                id="parent_id" 
+                name="parent_id" 
+                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Enter category title"
+                value=Category.parent_id
               )
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3")
@@ -37,28 +50,28 @@ block main
                 accept="image/*"
                 onchange= `previewFile()`
               )
-              img(src="", class="h-[80px] w-[100px]" previewImage alt="image of product")
+              img(src=Category.thumbnail, class="h-[80px] w-[100px]" previewImage alt="image of product")
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3")
-              label(for="thumbnail") Description
+              label(for="description") Description
             td(class="py-3")
               textarea(
-                name="descriptionCreateForm"
-                id="descriptionCreateForm"
+                name="description"
+                id="description"
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="descripttion of product "
-                ) 
+                placeholder="descripttion of category "
+                ) !{Category.description} 
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3")
-              label(for="deleted") Deleted in client
+              label(for="delete") Deleted in client
             td(class="py-3")
               select(
-                name="deleted" 
-                id="deleted" 
+                name="delete" 
+                id="delete" 
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               )
-                option(value="false" selected) False
-                option(value="true") True
+                option(value="false" selected= Category.delete==false ) False
+                option(value="true" selected= Category.delete==true) True
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3")
               label(for="status") Status *
@@ -69,50 +82,8 @@ block main
                 required
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               )
-                option(value="active" selected) Active
-                option(value="inactive") Inactive
-          tr(class="leading-10")
-            td(class="font-semibold text-gray-700 py-3") 
-              label(for="stock") Stock *
-            td(class="py-3") 
-              input(
-                type="number" 
-                id="stock" 
-                name="stock" 
-                required
-                min="0"
-                step="0.01"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="stock"
-              )
-          tr(class="leading-10")
-            td(class="font-semibold text-gray-700 py-3") 
-              label(for="price") Price *
-            td(class="py-3") 
-              input(
-                type="number" 
-                id="price" 
-                name="price" 
-                required
-                min="0"
-                step="0.01"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="0.00"
-              )
-          tr(class="leading-10")
-            td(class="font-semibold text-gray-700 py-3") 
-              label(for="price") % Discount 
-            td(class="py-3") 
-              input(
-                type="number" 
-                id="discount" 
-                name="discount" 
-                required
-                min="0"
-                step="0.01"
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="0.00"
-              )
+                option(value="active" selected = Category.status == "active") Active
+                option(value="inactive" selected = Category.status == "inactive") Inactive
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3") 
               label(for="position") Position
@@ -124,19 +95,20 @@ block main
                 name="position" 
                 class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="1"
+                value=Category.position
               )
           tr(class="leading-10")
             td(colspan="2" class="pt-6 text-right")
               button(
                 type="button" 
                 class="mr-3 px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                onclick="window.location.href=`/admin/products`"
+                onclick="window.location.href=`/admin/productsCategory`"
               ) Cancel
               button(
                 type="submit" 
                 class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
                 id="submit-btn"
-              ) Create Product
-  script(src="/admin/js/products.js")
+              ) Fix Category
+  script(src="/admin/js/category.js") 
   script(src="/tinymce/tinymce.min.js")
   script(src="/admin/js/my-tinymce-config.js")

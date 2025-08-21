@@ -161,7 +161,7 @@ module.exports.fixProduct = async (req, res) => {
 }
 module.exports.fixProductProcess = async (req, res) => {
     if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`
+        req.body.thumbnail = `${req.file.path}`
     }
     console.log(req.params.id);
     
@@ -215,7 +215,6 @@ module.exports.createNewProduct = async (req, res) => {
     // if (req.file.filename) {
     req.body.thumbnail = `${req.file.path}`
     let thumbnail = req.body.thumbnail
-    console.log(typeof(thumbnail));
     
     // }
     // else {
