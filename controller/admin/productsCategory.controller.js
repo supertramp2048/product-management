@@ -3,13 +3,19 @@ module.exports.productsCategory = async (req,res)=> {
     let find ={
         delete: false,
     }
-   const categories = await Category.find(find)
+   const categories = await Category.find(find).lean()
    res.render("admin/pages/productsCategory/index.pug",{
         categories: categories
     })
 }
 module.exports.createNewCategoryPage = async (req,res) => {
-    res.render("admin/pages/productsCategory/createNewCategory.pug")
+    let find = {
+        delete: false
+    }
+    const categories = await Category.find(find)
+    res.render("admin/pages/productsCategory/createNewCategory.pug",{
+         categories: categories
+    })
 }
 module.exports.postNewCategory = async (req,res) => {
   req.body.thumbnail = `${req.file.path}`
@@ -29,10 +35,46 @@ module.exports.changeStatus = async (req,res) => {
     res.redirect(backUrl)
 }
 module.exports.fixCategoryPage = async (req,res) => {
+    let find ={
+        delete: false,
+    }
+   const categories = await Category.find(find).lean()
+   function createTree(arr,parent_id = ""){
+    let tree =[]
+      arr.forEach(item => {
+         if(item.parent_id == parent_id){            
+           const newItem = { ...item }
+           const children = createTree(arr,item._id)
+           if(children.length > 0 ){
+              newItem.child  = children
+           }
+           tree.push(newItem)
+         }
+      })
+    return tree
+   }
+   const newCategories = createTree(categories)
+   //console.log(JSON.stringify(newCategories, null, 2));
+   function titlePrint(arr, prefix = "") {
+  arr.forEach((item, index) => {
+    const isLast = index === arr.length - 1;
+    const connector = isLast ? "└── " : "├── ";
+
+    console.log(prefix + connector + item.title);
+
+    if (item.child && item.child.length > 0) {
+      const newPrefix = prefix + (isLast ? "    " : "│   ");
+      titlePrint(item.child, newPrefix);
+    }
+  });
+}
+
+   titlePrint(newCategories)
     let id= req.params.id
     const category = await Category.findOne({_id: id})
     res.render("admin/pages/productsCategory/fixCategory.pug",{
-        Category: category
+        Category: category,
+        categories: newCategories
     })
 }
 module.exports.fixCategory = async (req,res) => {
@@ -55,6 +97,7 @@ module.exports.deleteCategory = async (req,res) => {
     }
     catch(err){
         req.flash("error", "delete category fail")
+        return res.redirect("/admin/products"); 
     }
     
 }

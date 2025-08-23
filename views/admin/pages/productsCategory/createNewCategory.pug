@@ -29,13 +29,10 @@ block main
             td(class="w-1/3 font-semibold text-gray-700 py-3") 
               label(for="title") Parent ID *
             td(class="py-3") 
-              input(
-                type="text" 
-                id="parent_id" 
-                name="parent_id" 
-                class="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter product title"
-              )
+              select(name="parent_id")
+                option(value="") -- Không chọn -- 
+                each categoryParent in categories 
+                  option(value=categoryParent._id ) #{categoryParent.title}  
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3")
               label(for="thumbnail") Thumbnail

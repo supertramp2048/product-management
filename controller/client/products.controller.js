@@ -1,4 +1,5 @@
 const Products = require("../../models/product.model")
+const Category = require("../../models/category.model")
 const search = require("../../helper/search")
 module.exports.products = async (req, res) => {
     let find = {
@@ -22,7 +23,39 @@ module.exports.products = async (req, res) => {
     if (searchObject.keySearch) {
         find.title = searchObject.regex
     }
-
+    // category da cap
+    const categories = await Category.find().lean()
+    function createTree(arr,parent_id=""){
+        var tree =[]
+        arr.forEach(item => {
+           if(item.parent_id == parent_id){
+            const newItem = item
+            const childrent = createTree(arr,item._id)
+            if(childrent.length){
+                newItem.childrent = childrent
+            }
+            tree.push(newItem)
+           }
+        })
+        return tree
+    }
+    const newRecords =  createTree(categories)
+    console.log(newRecords);
+    
+    // function printTree(arr,prefix=""){
+    //     arr.forEach((item,index) => {
+    //         const isLast = index == arr.length-1
+    //         const connector = isLast ? "└── " : "├── "
+    //         console.log(prefix+connector+item.title);
+    //         if(item.childrent && item.childrent.length > 0){
+    //             const newPrefix = prefix + (isLast ? "    " : "│   ") 
+    //             printTree(item.childrent,newPrefix)
+    //         }
+            
+    //     })
+    // }
+    // printTree(newRecords)
+    //-------------
     objectPagination.totalPage = Math.ceil(await Products.find(find).countDocuments() / objectPagination.limitItems)
     objectPagination.skipItems = (objectPagination.currentPage - 1) * objectPagination.limitItems
     //console.log(objectPagination.totalPage);
@@ -30,7 +63,8 @@ module.exports.products = async (req, res) => {
     res.render("client/pages/products/index.pug", {
         products: products,
         pagination: objectPagination,
-        keySearch: searchObject.keySearch
+        keySearch: searchObject.keySearch,
+        categories: newRecords
     });
 } 
 module.exports.productDetail = async (req,res) => {

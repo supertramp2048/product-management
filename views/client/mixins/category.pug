@@ -1,0 +1,6 @@
+mixin chooseCategory(arr)
+  ul  
+    each item in arr 
+      li #{item.title}
+      if item.childrent && item.childrent.length > 0
+        +chooseCategory(item.childrent)
