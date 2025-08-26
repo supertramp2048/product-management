@@ -73,7 +73,7 @@ module.exports.fixCategoryPage = async (req,res) => {
 //   });
 // }
 
-   titlePrint(newCategories)
+   //titlePrint(newCategories)
     let id= req.params.id
     const category = await Category.findOne({_id: id})
     res.render("admin/pages/productsCategory/fixCategory.pug",{
