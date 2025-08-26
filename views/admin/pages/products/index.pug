@@ -58,7 +58,7 @@ block main
                   tr 
                     td(class="border border-white p-2")
                       input(type="checkbox" check-item id=product._id)
-                    td(class="border border-white p-2") #{index+1}
+                    td(class="border border-white p-2") #{pagination.currentPage*pagination.limitItems - pagination.limitItems + index+1}
                     td(class="border border-white p-2") #{product.title} 
                     td(class="border border-white p-2") 
                         img(src=product.thumbnail, class="w-[100px] h-[80px]" alt="img")

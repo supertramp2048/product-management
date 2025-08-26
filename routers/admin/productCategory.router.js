@@ -18,4 +18,5 @@ router.patch("/changeStatusCategory/:status/:id",controller.changeStatus)
 router.get("/fixCategoryPage/:id",controller.fixCategoryPage)
 router.patch("/fixCategory/:id",upload.single('thumbnail'),controller.fixCategory)
 router.delete("/deleteCategory/:id",controller.deleteCategory)
+router.post("/tiniMCE-img",upload.single('file'),controller.uploadTiniMCE)
 module.exports = router

@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
+include ../../mixins/hierarchyCategory.pug
 block main 
   div 
     +alertSuccess(3000)
@@ -16,37 +17,14 @@ block main
         if categories.length > 0
           table 
             thead 
-              th(class="border border-white p-2") 
-                input(type="checkbox" check-all)
-              th(class="border border-white p-2") STT
-              th(class="border border-white p-2") Category name
-              th(class="border border-white p-2") Image
-              th(class="border border-white p-2") Status
-              th(class="border border-white p-2") Action
-            tbody 
-              each category, index in categories
-                tr 
-                  td(class="border border-white p-2")
-                    input(type="checkbox" check-item id=category._id)
-                  td(class="border border-white p-2") #{index + 1}
-                  td(class="border border-white p-2") #{category.title}
-                  td(class="border border-white p-2")
-                    if category.thumbnail
-                      img(src=category.thumbnail class="w-[100px] h-[80px]" alt="img")
-                    else
-                      span N/A
-                  td(class="border border-white p-2 w-[160px] text-center")
-                    if category.status == "active"
-                      button(class="btn-primary" id=category._id btn-isActive=category.status) Hoạt động
-                    else 
-                      button(class="btn-danger" id=category._id btn-isActive=category.status) Dừng hoạt động
-                  td(class="flex border border-white p-2") 
-                    a(href=`${prefixAdmin}/productsCategory/fixCategoryPage/${category._id}` class="btn-primary mr-1") Fix
-                    a(href=`${prefixAdmin}/productsCategory/categoryDetail/${category._id}` class="btn-primary mr-1") Detail
-                    if category.delete == true
-                      button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
-                    else 
-                      button(class="btn-danger" idCategory=category._id data-category=JSON.stringify(category) btn-action-delete="delete") Delete
+                th(class="border border-white p-2") 
+                  input(type="checkbox" check-all)
+                th(class="border border-white p-2") STT
+                th(class="border border-white p-2") Category name
+                th(class="border border-white p-2") Image
+                th(class="border border-white p-2") Status
+                th(class="border border-white p-2") Action 
+            +treeCategory(categories,1,"")
         else  
           p There is nothing here
     form(

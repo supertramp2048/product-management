@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
+include ../../mixins/ChooseCateParent.pug
 block main
   +alertSuccess(3000)
   +alertFail(3000)
@@ -11,7 +12,7 @@ block main
         method="POST"
         enctype="multipart/form-data"
         id="form-create-category"
-    )
+      )
       table(class="w-full table-auto")
         tbody
           tr(class="leading-10")
@@ -31,8 +32,7 @@ block main
             td(class="py-3") 
               select(name="parent_id")
                 option(value="") -- Không chọn -- 
-                each categoryParent in categories 
-                  option(value=categoryParent._id ) #{categoryParent.title}  
+                +choosenParent(categories)
           tr(class="leading-10")
             td(class="font-semibold text-gray-700 py-3")
               label(for="thumbnail") Thumbnail

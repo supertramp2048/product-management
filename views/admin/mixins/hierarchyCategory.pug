@@ -1,0 +1,30 @@
+mixin treeCategory(arr,level=1,parent_id="")
+  - var prefix = Array(level+1).join("---|")
+  tbody 
+    each category in arr
+        tr   
+            td(class="border border-white p-2")
+                input(type="checkbox" check-item id=category._id)
+            td(class="border border-white p-2") #{category.index}
+            td(class="border border-white p-2") #{prefix} #{category.title}
+            td(class="border border-white p-2")
+                if category.thumbnail
+                    img(src=category.thumbnail class="w-[100px] h-[80px]" alt="img")
+                else
+                    span N/A
+            td(class="border border-white p-2 w-[160px] text-center")
+                if category.status == "active"
+                    button(class="btn-primary" id=category._id btn-isActive=category.status) Hoạt động
+                else 
+                    button(class="btn-danger" id=category._id btn-isActive=category.status) Dừng hoạt động
+            td(class="flex border border-white p-2") 
+                a(href=`${prefixAdmin}/productsCategory/fixCategoryPage/${category._id}` class="btn-primary mr-1") Fix
+                a(href=`${prefixAdmin}/productsCategory/categoryDetail/${category._id}` class="btn-primary mr-1") Detail
+                if category.delete == true
+                    button(class="bg-red-500 text-white px-4 py-2 rounded opacity-50 cursor-not-allowed" disabled) Deleted
+                else 
+                    button(class="btn-danger" idCategory=category._id data-category=JSON.stringify(category) btn-action-delete="delete") Delete
+        if category.childrent && category.childrent.length>0
+            - var newLevel = level + 1
+            +treeCategory(category.childrent,newLevel,category._id)
+        

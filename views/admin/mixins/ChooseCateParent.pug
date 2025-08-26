@@ -7,13 +7,13 @@
 //-           - const newIslast = isLast ? "----" : "│   "
 //-           - const newPrefix = prefix + newIslast
 //-           +choosenParent(category.child,newPrefix)
-mixin choosenParent(categories,level,currentParent_id)
+mixin choosenParent(categories,level=1,currentParent_id)
   each category in categories 
-    - var prefix = Array(level + 1).join("---")
+    - var prefix = Array(level+1).join("---")
     option(
       value=category._id
       selected=(String(category._id) === String(currentParent_id))
     ) #{prefix} #{category.title} 
-    if category.child 
+    if category.childrent 
       - var newlevel = level + 1
-      +choosenParent(category.child, newlevel, currentParent_id)
+      +choosenParent(category.childrent, newlevel, currentParent_id)
