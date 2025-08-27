@@ -4,4 +4,7 @@ const controller = require('../../controller/admin/role.controller')
 router.get("/",controller.role)
 router.get("/newRole",controller.newRole)
 router.post("/newRolePost",controller.newRolePost)
+router.get("/fixRoleGroup/:id",controller.fixRoleGroup)
+router.patch("/fixRoleGroupPatch/:id",controller.fixRoleGroupPatch)
+router.delete("/deleteRoleGroup/:id",controller.deleteRole)
 module.exports = router
