@@ -1,0 +1,89 @@
+const { defaultAvatar } = require("../../config/system")
+const Account = require("../../models/account.model")
+const Role = require("../../models/role.model")
+var md5 = require('md5')
+module.exports.accountPage = async (req,res) => {
+    let find = {
+        delete: false
+    }
+    const accounts = await Account.find(find)
+    res.render("admin/pages/accounts/index.pug",{
+        accounts:accounts,
+    })
+}
+module.exports.newAccount = async (req,res) => {
+    let find = {
+        delete: false
+    }
+    const roles = await Role.find()
+    res.render("admin/pages/accounts/newAccount.pug",{
+        roles: roles
+    })
+}
+module.exports.newAccountPost = async (req,res) => {
+    try {
+        let encryptedPassword = md5(req.body.password)
+        req.body.password = encryptedPassword
+        req.body.avatar = `${req.file.path}`
+    } catch (error) {
+        req.body.avatar = defaultAvatar
+    }
+    // console.log(req.body);
+    let role = req.body.role_id
+    const arrRole = role.split("_")
+    console.log(arrRole);
+    let obj = req.body
+    obj.role_id = arrRole[0]
+    obj.role = arrRole[1]
+    // console.log(obj);
+    let existedEmail = await Account.findOne({
+        email: req.body.email,
+        delete: false
+    })
+    let existedPhone = await Account.findOne({
+        phone: req.body.phone,
+        delete: false
+    })
+    if(existedEmail){
+        req.flash("error","email da duoc dang ky")
+        const backUrl = req.get("referer") || "/admin/account";
+        res.redirect(backUrl)
+        return
+    }
+    else if(existedPhone){
+        req.flash("error","sdt da duoc dang ky")
+        const backUrl = req.get("referer") || "/admin/account";
+        res.redirect(backUrl)
+        return
+    }
+    await Account.insertOne(obj)
+    req.flash("success","dang ky tai khoan thanh cong")
+    const backUrl = req.get("referer") || "/admin/account";
+    res.redirect(backUrl)
+}
+module.exports.deleteAccount = async (req,res) => {
+    let id = req.params.id
+    try {
+        await Account.updateOne({_id: id},{delete: true})
+        req.flash("success","Xoa thanh cong")
+        const backUrl = req.get("referer") || "/admin/account";
+        res.redirect(backUrl)
+    } catch (error) {
+        console.log(error);
+        req.flash("error","xoa that bai")
+        const backUrl = req.get("referer") || "/admin/account";
+        res.redirect(backUrl)
+    }
+}
+module.exports.editAccount = async (req,res) => {
+    let account = await Account.findOne({_id: req.params.id})
+     let find = {
+        delete: false
+    }
+    const roles = await Role.find()
+    console.log(account);
+    res.render("admin/pages/accounts/editAccount.pug",{
+        roles:roles,
+        account: account
+    })
+}
