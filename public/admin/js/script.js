@@ -7,6 +7,7 @@ const btnNavigation = document.querySelectorAll('[btn-navigation]')
 
 // show alert success
 const showAlert = document.querySelector('[show-success-alert]')
+
 if (showAlert) {
     setTimeout(
         alertTimeOut
@@ -28,10 +29,17 @@ function alertTimeOutFail() {
 }
 // ---------
  // them su kien cho close alert button 
-    const closeAlert = document.querySelector("[close-alert-btn]")
-    if (closeAlert) {
-        closeAlert.addEventListener("click", () => {
+    const closeAlertSuccess = document.querySelector("[close-alert-btn-success]")
+    const closeAlertFail = document.querySelector("[close-alert-btn-fail]")
+    
+    if (closeAlertSuccess) {
+        closeAlertSuccess.addEventListener("click", () => {
            showAlert.classList.add("hidden")
+        })
+    }
+    if (closeAlertFail) {
+        closeAlertFail.addEventListener("click", () => {
+           showAlertFail.classList.add("hidden")
         })
     }
 

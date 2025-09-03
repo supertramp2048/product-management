@@ -13,4 +13,5 @@ router.get("/newAccount",controller.newAccount)
 router.post("/newAccountPost",upload.single('avatar'),controller.newAccountPost)
 router.delete("/delete/:id",controller.deleteAccount)
 router.get("/:id/editAccount",controller.editAccount)
+router.patch("/:id/editAccountPatch",upload.single('avatar'),controller.editAccountPatch)
 module.exports = router

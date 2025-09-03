@@ -87,3 +87,48 @@ module.exports.editAccount = async (req,res) => {
         account: account
     })
 }
+module.exports.editAccountPatch = async (req,res) => {
+    console.log("id ",req.params.id);
+    
+    const oldAccount = await Account.findOne({_id: req.params.id})
+    console.log("old Account ",oldAccount);
+    
+    try {
+        let encryptedPassword = md5(req.body.password)
+        req.body.password = encryptedPassword
+        req.body.avatar = `${req.file.path}`
+    } catch (error) {
+        req.body.avatar = defaultAvatar
+    }
+    let role = req.body.role_id
+    const arrRole = role.split("_")
+    let obj = req.body
+    obj.role_id = arrRole[0]
+    obj.role = arrRole[1]
+    let existedEmail = await Account.findOne({
+        email: req.body.email,
+        delete: false
+    })
+    let existedPhone = await Account.findOne({
+        phone: req.body.phone,
+        delete: false
+    })
+    if(existedEmail && obj.email != oldAccount.email){
+        req.flash("error","email da duoc dang ky")
+        const backUrl = req.get("referer") || "/admin/account";
+        res.redirect(backUrl)
+        return
+    }
+    else if(existedPhone && obj.phone != oldAccount.phone){
+        req.flash("error","sdt da duoc dang ky")
+        const backUrl = req.get("referer") || "/admin/account";
+        res.redirect(backUrl)
+        return
+    }
+    console.log("new Account ",obj);
+    
+    await Account.updateOne({email: obj.email},obj)
+    req.flash("success","cap nhat tai khoan thanh cong")
+    const backUrl = req.get("referer") || "/admin/account";
+    res.redirect(backUrl)
+}
