@@ -3,7 +3,6 @@ const { defaultAvatar } = require('../config/system');
 const generate = require("../helper/generate")
 const mongoURL = process.env.MONGO_URL
 const mongoose = require('mongoose')
-let md5 = require('md5')
 mongoose.connect(mongoURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true

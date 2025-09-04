@@ -1015,10 +1015,6 @@ video {
   width: 16.666667%;
 }
 
-.w-3\/12 {
-  width: 25%;
-}
-
 .w-32 {
   width: 8rem;
 }
@@ -1045,10 +1041,6 @@ video {
 
 .w-60 {
   width: 15rem;
-}
-
-.w-9\/12 {
-  width: 75%;
 }
 
 .w-\[100px\] {
@@ -1217,10 +1209,6 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
-}
-
-.self-center {
-  align-self: center;
 }
 
 .overflow-hidden {

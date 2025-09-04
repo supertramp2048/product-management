@@ -2,12 +2,10 @@ extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
 include ../../mixins/hierarchyCategory.pug
 block main 
-  include ../../particals/confirmDelete.pug
-  include ../../particals/loadingIcon.pug
   div
     +alertSuccess(3000)
     div 
-      p(class="text-2xl") List of products
+      p(class="text-2xl") List of role
     div(class="flex items-center")
       div(class="p-8 flex gap-3 ")
       div 

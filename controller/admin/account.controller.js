@@ -81,7 +81,6 @@ module.exports.editAccount = async (req,res) => {
         delete: false
     }
     const roles = await Role.find()
-    console.log(account);
     res.render("admin/pages/accounts/editAccount.pug",{
         roles:roles,
         account: account
@@ -94,11 +93,18 @@ module.exports.editAccountPatch = async (req,res) => {
     console.log("old Account ",oldAccount);
     
     try {
-        let encryptedPassword = md5(req.body.password)
-        req.body.password = encryptedPassword
         req.body.avatar = `${req.file.path}`
     } catch (error) {
         req.body.avatar = defaultAvatar
+    }
+    if (req.body.password != oldAccount.password) {
+        console.log("old pass ",oldAccount.password);
+        
+        console.log("new pass ",req.body.password);
+        
+        req.body.password = md5(req.body.password);
+    } else {
+    delete req.body.password; // giữ nguyên password cũ trong DB
     }
     let role = req.body.role_id
     const arrRole = role.split("_")
@@ -119,16 +125,15 @@ module.exports.editAccountPatch = async (req,res) => {
         res.redirect(backUrl)
         return
     }
-    else if(existedPhone && obj.phone != oldAccount.phone){
+    if(existedPhone && obj.phone != oldAccount.phone){
         req.flash("error","sdt da duoc dang ky")
         const backUrl = req.get("referer") || "/admin/account";
         res.redirect(backUrl)
         return
     }
-    console.log("new Account ",obj);
     
-    await Account.updateOne({email: obj.email},obj)
-    req.flash("success","cap nhat tai khoan thanh cong")
-    const backUrl = req.get("referer") || "/admin/account";
-    res.redirect(backUrl)
+        await Account.updateOne({email: obj.email},obj)
+        req.flash("success","cap nhat tai khoan thanh cong")
+        const backUrl = req.get("referer") || "/admin/account";
+        res.redirect(backUrl)
 }

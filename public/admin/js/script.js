@@ -4,7 +4,6 @@ const btnStatus = document.querySelectorAll('[btn-status]')
 const formSearch = document.getElementById('form-search')
 const btnPage = document.querySelectorAll('[btn-Page]')
 const btnNavigation = document.querySelectorAll('[btn-navigation]')
-
 // show alert success
 const showAlert = document.querySelector('[show-success-alert]')
 

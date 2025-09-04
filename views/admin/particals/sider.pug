@@ -1,14 +1,19 @@
-div(class="w-2/12 bg-gray-800") 
-  ul  
+div(class="w-2/12 bg-gray-800")
+  ul
     li(class="border-b border-e-white text-xl text-white p-2") 
       a(href=`${prefixAdmin}/dashboard`) Tổng quan
-    li(class="border-b border-e-white text-xl text-white p-2") 
-      a(href="/admin/products") Danh sách sản Phẩm 
-    li(class="border-b border-e-white text-xl text-white p-2") 
-      a(href="/admin/productsCategory") Danh mục sản phẩm 
-    li(class="border-b border-e-white text-xl text-white p-2")
-      a(href="/admin/role") Nhóm quyền
-    li(class="border-b border-e-white text-xl text-white p-2")
-      a(href="/admin/permission") Phân quyền
-    li(class="border-b border-e-white text-xl text-white p-2")
-      a(href="/admin/account") Danh sách tài khoản 
+    if(rolesCurrent.permission.includes("product-view"))
+      li(class="border-b border-e-white text-xl text-white p-2") 
+        a(href="/admin/products") Danh sách sản Phẩm 
+    if(rolesCurrent.permission.includes("category-view"))
+      li(class="border-b border-e-white text-xl text-white p-2") 
+        a(href="/admin/productsCategory") Danh mục sản phẩm 
+    if(rolesCurrent.permission.includes("role-view"))
+      li(class="border-b border-e-white text-xl text-white p-2")
+        a(href="/admin/role") Nhóm quyền
+    if(rolesCurrent.permission.includes("role-view"))
+      li(class="border-b border-e-white text-xl text-white p-2")
+        a(href="/admin/permission") Phân quyền
+    if(rolesCurrent.permission.includes("role-view"))
+      li(class="border-b border-e-white text-xl text-white p-2")
+        a(href="/admin/account") Danh sách tài khoản 
