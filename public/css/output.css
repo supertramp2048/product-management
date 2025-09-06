@@ -554,6 +554,37 @@ video {
   display: none;
 }
 
+.main ul {
+  background-color: rgb(246, 242, 242);
+  position: absolute;
+}
+
+.main li {
+  border-radius: 0.375rem;
+  width: 100px;
+  position: relative;
+}
+
+.main>li>ul {
+  position: absolute;
+  right: 0%;
+  top: 100%;
+  display: none;
+}
+
+.main>li>ul ul {
+  left: 100%;
+  top: 0%;
+}
+
+.main li:hover > ul {
+  display: block ;
+}
+
+.main li:hover {
+  background-color: antiquewhite;
+}
+
 .container {
   width: 100%;
 }
@@ -963,6 +994,10 @@ video {
   height: 100px;
 }
 
+.h-\[200px\] {
+  height: 200px;
+}
+
 .h-\[300px\] {
   height: 300px;
 }
@@ -1051,16 +1086,16 @@ video {
   width: 160px;
 }
 
-.w-\[200px\] {
-  width: 200px;
-}
-
 .w-\[500px\] {
   width: 500px;
 }
 
 .w-\[50px\] {
   width: 50px;
+}
+
+.w-auto {
+  width: auto;
 }
 
 .w-full {
@@ -1131,8 +1166,8 @@ video {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
 
-.flex-row {
-  flex-direction: row;
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .flex-row-reverse {
@@ -1141,10 +1176,6 @@ video {
 
 .flex-col {
   flex-direction: column;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
 }
 
 .items-start {
@@ -1367,6 +1398,11 @@ video {
   background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
 }
 
+.bg-slate-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(241 245 249 / var(--tw-bg-opacity, 1));
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
@@ -1487,6 +1523,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.pb-1 {
+  padding-bottom: 0.25rem;
+}
+
 .pb-6 {
   padding-bottom: 1.5rem;
 }
@@ -1495,12 +1535,20 @@ video {
   padding-bottom: 2rem;
 }
 
+.pl-2 {
+  padding-left: 0.5rem;
+}
+
 .pl-8 {
   padding-left: 2rem;
 }
 
-.pr-4 {
-  padding-right: 1rem;
+.pr-2 {
+  padding-right: 0.5rem;
+}
+
+.pt-1 {
+  padding-top: 0.25rem;
 }
 
 .pt-4 {
@@ -1865,6 +1913,10 @@ video {
     width: 300px;
   }
 
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .md\:flex-row {
     flex-direction: row;
   }
@@ -1878,6 +1930,10 @@ video {
 @media (min-width: 1024px) {
   .lg\:w-\[450px\] {
     width: 450px;
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .lg\:flex-row {

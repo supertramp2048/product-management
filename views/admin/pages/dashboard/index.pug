@@ -2,8 +2,11 @@ extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
 
 block main 
-  +alertSuccess(3000)
-  h1 Trang tong quan
-    p #{user}
-    p ------------------
-    p #{roles}
+  if(rolesCurrent.permission.length > 0)
+    +alertSuccess(3000)
+    h1 Trang tong quan
+      p #{user}
+      p ------------------
+      p= JSON.stringify(rolesCurrent)
+  else 
+    h1 Bạn không thể xem trang này

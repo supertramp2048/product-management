@@ -45,3 +45,15 @@ PaginationBtn.forEach(item => {
 window.addEventListener("pageshow", () => {
     divLoader.classList.add("hidden")
 })
+const btnShowCategory = document.getElementById("btnShowCategory")
+let categoryMenu = document.getElementById("mainCategory")
+let showCategoryVar = false
+btnShowCategory.addEventListener("click",()=>{
+    showCategoryVar = !showCategoryVar
+    if(showCategoryVar == true){
+       categoryMenu.classList.remove("hidden")
+    }
+    if(showCategoryVar == false){
+        categoryMenu.classList.add("hidden")
+    }
+})

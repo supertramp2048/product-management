@@ -6,8 +6,8 @@ block main
     div
       div(class="flex")
         +search(keySearch)
-        if products.length < 1
-          include ../../partials/notFoundPage.pug   
+      if products.length < 1
+        include ../../partials/notFoundPage.pug   
       +productGrid(products) 
       if pagination.totalPage < 6 
         ul(class="pagination")

@@ -2,86 +2,89 @@ extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
 
 block main
-  include ../../particals/confirmDelete.pug
-  include ../../particals/loadingIcon.pug
+  if(rolesCurrent.permission.includes("account-view"))
+    include ../../particals/confirmDelete.pug
+    include ../../particals/loadingIcon.pug
 
-  .container.mx-auto.p-6
-    +alertSuccess(3000)
+    .container.mx-auto.p-6
+      +alertSuccess(3000)
 
-    // Header
-    .flex.items-center.justify-between.mb-4
-      h1.text-2xl.font-bold.text-gray-900 List of accounts
-      a.btn-primary.border.border-green-600.rounded-lg.px-4.py-2(href=`${prefixAdmin}/account/newAccount`)
-        | + Add new account
+      // Header
+      .flex.items-center.justify-between.mb-4
+        h1.text-2xl.font-bold.text-gray-900 List of accounts
+        a.btn-primary.border.border-green-600.rounded-lg.px-4.py-2(href=`${prefixAdmin}/account/newAccount`)
+          | + Add new account
 
-    // Bảng danh sách
-    if accounts && accounts.length
-      .overflow-x-auto.rounded-2xl.shadow-md.border.border-gray-200.bg-white
-        table.w-full.table-fixed.border-collapse
-          thead
-            tr.bg-gray-50
-              th.px-3.py-3.text-center.border-b.border-gray-200.w-12
-                input(type="checkbox" check-all)
-              th.px-3.py-3.text-left.border-b.border-gray-200.w-16 STT
-              th.px-3.py-3.text-left.border-b.border-gray-200.w-16 Avartar
-              th.px-3.py-3.text-left.border-b.border-gray-200.w-56 Account's name
-              th.px-3.py-3.text-left.border-b.border-gray-200.w-60 Email
-              th.px-3.py-3.text-left.border-b.border-gray-200.w-40 Phone
-              th.px-3.py-3.text-left.border-b.border-gray-200.w-40 Role
-              th.px-3.py-3.text-center.border-b.border-gray-200.w-32 Status
-              th.px-3.py-3.text-center.border-b.border-gray-200.w-56 Action
-          tbody
-            each account, index in accounts
-              tr(class=index % 2 === 0 ? 'bg-white' : 'bg-gray-50')
-                // Checkbox chọn dòng
-                td.px-3.py-2.text-center.align-middle.border-b
-                  input(type="checkbox" name="ids" value=account._id check-item)
+      // Bảng danh sách
+      if accounts && accounts.length
+        .overflow-x-auto.rounded-2xl.shadow-md.border.border-gray-200.bg-white
+          table.w-full.table-fixed.border-collapse
+            thead
+              tr.bg-gray-50
+                th.px-3.py-3.text-center.border-b.border-gray-200.w-12
+                  input(type="checkbox" check-all)
+                th.px-3.py-3.text-left.border-b.border-gray-200.w-16 STT
+                th.px-3.py-3.text-left.border-b.border-gray-200.w-16 Avartar
+                th.px-3.py-3.text-left.border-b.border-gray-200.w-56 Account's name
+                th.px-3.py-3.text-left.border-b.border-gray-200.w-60 Email
+                th.px-3.py-3.text-left.border-b.border-gray-200.w-40 Phone
+                th.px-3.py-3.text-left.border-b.border-gray-200.w-40 Role
+                th.px-3.py-3.text-center.border-b.border-gray-200.w-32 Status
+                th.px-3.py-3.text-center.border-b.border-gray-200.w-56 Action
+            tbody
+              each account, index in accounts
+                tr(class=index % 2 === 0 ? 'bg-white' : 'bg-gray-50')
+                  // Checkbox chọn dòng
+                  td.px-3.py-2.text-center.align-middle.border-b
+                    input(type="checkbox" name="ids" value=account._id check-item)
 
-                // STT
-                td.px-3.py-2.align-middle.border-b #{index + 1}
-                // AVATAR
-                td.px-3.py-2.align-middle.border-b 
-                  img(src=account.avatar, alt="" class="w-10 h-10 rounded-2xl")
+                  // STT
+                  td.px-3.py-2.align-middle.border-b #{index + 1}
+                  // AVATAR
+                  td.px-3.py-2.align-middle.border-b 
+                    img(src=account.avatar, alt="" class="w-10 h-10 rounded-2xl")
 
-                // Họ tên
-                td.px-3.py-2.align-middle.border-b #{account.fullName || '-'}
+                  // Họ tên
+                  td.px-3.py-2.align-middle.border-b #{account.fullName || '-'}
 
-                // Email
-                td.px-3.py-2.align-middle.border-b #{account.email || '-'}
+                  // Email
+                  td.px-3.py-2.align-middle.border-b #{account.email || '-'}
 
-                // Phone
-                td.px-3.py-2.align-middle.border-b #{account.phone || '-'}
+                  // Phone
+                  td.px-3.py-2.align-middle.border-b #{account.phone || '-'}
 
-                // Role (map từ rolesMap hoặc gắn sẵn account.roleName từ controller)
-                td.px-3.py-2.align-middle.border-b #{account.role }
+                  // Role (map từ rolesMap hoặc gắn sẵn account.roleName từ controller)
+                  td.px-3.py-2.align-middle.border-b #{account.role }
 
-                // Status
-                td.px-3.py-2.text-center.align-middle.border-b
-                  if account.status === 'active'
-                    span.inline-block.bg-green-100.text-green-700.text-xs.font-medium.px-2.py-1.rounded-full Active
-                  else if account.status === 'inactive'
-                    span.inline-block.bg-gray-100.text-gray-700.text-xs.font-medium.px-2.py-1.rounded-full Inactive
-                  else
-                    span.inline-block.bg-yellow-100.text-yellow-700.text-xs.font-medium.px-2.py-1.rounded-full #{account.status || 'N/A'}
-
-                // Actions
-                td.px-3.py-2.text-center.align-middle.border-b
-                  .inline-flex.gap-2.justify-center
-                    a.btn-primary.px-3.py-1.rounded(href=`${prefixAdmin}/account/${account._id}/editAccount`) Edit
-                    a.btn-primary.px-3.py-1.rounded(href=`${prefixAdmin}/account/${account._id}`) Detail
-                    if account.delete === true
-                      button.bg-red-500.text-white.px-3.py-1.rounded.opacity-50.cursor-not-allowed(disabled) Deleted
+                  // Status
+                  td.px-3.py-2.text-center.align-middle.border-b
+                    if account.status === 'active'
+                      span.inline-block.bg-green-100.text-green-700.text-xs.font-medium.px-2.py-1.rounded-full Active
+                    else if account.status === 'inactive'
+                      span.inline-block.bg-gray-100.text-gray-700.text-xs.font-medium.px-2.py-1.rounded-full Inactive
                     else
-                      button.btn-danger.px-3.py-1.rounded(
-                        data-id=account._id
-                        data-name=account.fullName
-                        btn-action-delete="delete"
-                      ) Delete
-    else
-      p.text-gray-600 There is nothing here
-  form(action=""
-      name="formChange"
-      id="formChange"
-      path=`${prefixAdmin}/account/delete`
-      method="post") 
-  script(src="/admin/js/account.js") 
+                      span.inline-block.bg-yellow-100.text-yellow-700.text-xs.font-medium.px-2.py-1.rounded-full #{account.status || 'N/A'}
+
+                  // Actions
+                  td.px-3.py-2.text-center.align-middle.border-b
+                    .inline-flex.gap-2.justify-center
+                      a.btn-primary.px-3.py-1.rounded(href=`${prefixAdmin}/account/${account._id}/editAccount`) Edit
+                      a.btn-primary.px-3.py-1.rounded(href=`${prefixAdmin}/account/${account._id}`) Detail
+                      if account.delete === true
+                        button.bg-red-500.text-white.px-3.py-1.rounded.opacity-50.cursor-not-allowed(disabled) Deleted
+                      else
+                        button.btn-danger.px-3.py-1.rounded(
+                          data-id=account._id
+                          data-name=account.fullName
+                          btn-action-delete="delete"
+                        ) Delete
+      else
+        p.text-gray-600 There is nothing here
+    form(action=""
+        name="formChange"
+        id="formChange"
+        path=`${prefixAdmin}/account/delete`
+        method="post") 
+    script(src="/admin/js/account.js") 
+  else 
+    h1 Bạn không thể truy cập vào đây

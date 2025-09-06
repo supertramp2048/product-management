@@ -1,6 +1,7 @@
 mixin chooseCategory(arr)
-  ul  
+  ul(class="hidden")  
     each item in arr 
-      li #{item.title}
-      if item.childrent && item.childrent.length > 0
-        +chooseCategory(item.childrent)
+      li(class="pr-2 pl-2 pt-1 pb-1") 
+        a(href=`/products/${item.slug}/${item._id}`) #{item.title}
+        if item.childrent && item.childrent.length > 0
+          +chooseCategory(item.childrent)

@@ -1,14 +1,14 @@
-header(class=" w-full h-28 flex justify-center items-center")
+include ../../client/mixins/category.pug
+header(class=" w-full h-28 flex justify-center items-center bg-slate-100")
   div(class="flex w-4/5 ")
     div(class="basis-3/12")
       a(href="/")
         img(src="/images/logo.png", alt="logo")
     div(class="basis-9/12 flex items-center")
-      ul(class="flex gap-5") 
+      ul(class="flex gap-5 main") 
         li(class="border border-slate-500 p-2 rounded-md") 
           a(href="/") Home
         li(class="border border-slate-500 p-2 rounded-md") 
           a(href="/products") Product
-  
-  
-  
+        li(class="border border-slate-500 p-2 rounded-md " )  Category
+          +chooseCategory(layoutCategory)

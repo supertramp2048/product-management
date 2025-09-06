@@ -19,7 +19,22 @@ mongoose.connect(mongoURL, {
 const productSchema = new mongoose.Schema({
     title: String,
     slug: { type: String, slug: "title" },
+    createdBy: {
+  type: [
+    {
+      account_id: String,
+      account_name: String,
+      createAt: {
+        type: String,
+        default: () => new Date().toISOString()
+      }
+    }
+  ],
+  default: []
+},
+
     thumbnail: String,
+    product_category_id: String,
     delete: Boolean,
     price: Number,
     status: String,

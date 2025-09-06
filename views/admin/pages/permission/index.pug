@@ -1,125 +1,159 @@
 extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
 block main 
-  +alertSuccess(3000)
-  +alertFail(3000)
-  .max-w-6xl.mx-auto.p-4
-    h1(class="font-bold text-3xl mb-6 text-gray-900") Danh sách phân quyền
+  if(rolesCurrent.permission.includes("role-view"))
+    +alertSuccess(3000)
+    +alertFail(3000)
+    .max-w-6xl.mx-auto.p-4
+      h1(class="font-bold text-3xl mb-6 text-gray-900") Danh sách phân quyền
 
-    .flex.justify-end.mb-4
-      button(class="btn-primary" id="btnSubmit") Cập nhật
+      .flex.justify-end.mb-4
+        button(class="btn-primary" id="btnSubmit") Cập nhật
 
-    // Wrapper giúp responsive ngang trên màn hình nhỏ
-    .overflow-x-auto.rounded-2xl.shadow-md.border.border-gray-200.bg-white
-      table(class="w-full table-fixed border-collapse" table-permission)
-        thead
-          tr(class="bg-gray-50")
-            th(class="sticky left-0 z-10 bg-gray-50 text-left px-4 py-3 font-semibold text-gray-700 w-44 md:w-56 border-b border-gray-200") Tính năng
-            each item in records 
-              th(class="px-4 py-3 font-semibold text-gray-700 text-center border-b border-gray-200") #{item.title}
-        tbody
-          tr
+      // Wrapper giúp responsive ngang trên màn hình nhỏ
+      .overflow-x-auto.rounded-2xl.shadow-md.border.border-gray-200.bg-white
+        table(class="w-full table-fixed border-collapse" table-permission)
+          thead
+            tr(class="bg-gray-50")
+              th(class="sticky left-0 z-10 bg-gray-50 text-left px-4 py-3 font-semibold text-gray-700 w-44 md:w-56 border-b border-gray-200") Tính năng
+              each item in records 
+                th(class="px-4 py-3 font-semibold text-gray-700 text-center border-b border-gray-200") #{item.title}
+          tbody
+            tr
+              td(colspan=records.length class="p-2") 
+                h1(class="font-bold text-xl") Danh mục sản phẩm
+            // Hàng 1: ID 
+            tr(class="odd:bg-white even:bg-gray-50 hidden" data-name="id")
+              td(class="sticky left-0 bg-inherit px-4 py-2 text-sm text-gray-600 border-t border-gray-200") 
+              each item in records
+                td(class="px-4 py-2 text-center border-t border-gray-200")
+                  input(type="text" value=item._id class="w-full rounded-lg border border-gray-300 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500")
+
+            // Hàng 2: Xem
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-view")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xem
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("category-view") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 3: Thêm mới
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-addNew")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Thêm mới
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("category-addNew") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 4: Chỉnh sửa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-fix")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Chỉnh sửa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("category-fix") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 5: Xóa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-delete")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xóa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("category-delete") class="h-4 w-4 accent-blue-600")
+            tr
+              td(colspan=records.length class="p-2") 
+                h1(class="font-bold text-xl") Sản phẩm
+            // Hàng 2: Xem
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-view")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xem
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("product-view") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 3: Thêm mới
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-addNew")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Thêm mới
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("product-addNew") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 4: Chỉnh sửa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-fix")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Chỉnh sửa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("product-fix") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 5: Xóa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-delete")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xóa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("product-delete") class="h-4 w-4 accent-blue-600")
+            // ----------
+            tr
+              td(colspan=records.length class="p-2") 
+                h1(class="font-bold text-xl") Nhóm quyền
+            // Hàng 2: Xem
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-view")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xem
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("role-view") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 3: Thêm mới
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-addNew")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Thêm mới
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("role-addNew") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 4: Chỉnh sửa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-fix")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Chỉnh sửa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("role-fix") class="h-4 w-4 accent-blue-600")
+
+            // Hàng 5: Xóa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-delete")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xóa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("role-delete") class="h-4 w-4 accent-blue-600")
+            // ------------------
+            tr
             td(colspan=records.length class="p-2") 
-              h1(class="font-bold text-xl") Danh mục sản phẩm
-          // Hàng 1: ID 
-          tr(class="odd:bg-white even:bg-gray-50 hidden" data-name="id")
-            td(class="sticky left-0 bg-inherit px-4 py-2 text-sm text-gray-600 border-t border-gray-200") 
-            each item in records
-              td(class="px-4 py-2 text-center border-t border-gray-200")
-                input(type="text" value=item._id class="w-full rounded-lg border border-gray-300 px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500")
+              h1(class="font-bold text-xl") Tài khoản
+            // Hàng 2: Xem
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="account-view")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xem
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("account-view") class="h-4 w-4 accent-blue-600")
 
-          // Hàng 2: Xem
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-view")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xem
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("category-view") class="h-4 w-4 accent-blue-600")
+            // Hàng 3: Thêm mới
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="account-addNew")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Thêm mới
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("account-addNew") class="h-4 w-4 accent-blue-600")
 
-          // Hàng 3: Thêm mới
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-addNew")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Thêm mới
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("category-addNew") class="h-4 w-4 accent-blue-600")
+            // Hàng 4: Chỉnh sửa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="account-fix")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Chỉnh sửa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("account-fix") class="h-4 w-4 accent-blue-600")
 
-          // Hàng 4: Chỉnh sửa
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-fix")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Chỉnh sửa
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("category-fix") class="h-4 w-4 accent-blue-600")
-
-          // Hàng 5: Xóa
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="category-delete")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xóa
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("category-delete") class="h-4 w-4 accent-blue-600")
-          tr
-            td(colspan=records.length class="p-2") 
-              h1(class="font-bold text-xl") Sản phẩm
-          // Hàng 2: Xem
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-view")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xem
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("product-view") class="h-4 w-4 accent-blue-600")
-
-          // Hàng 3: Thêm mới
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-addNew")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Thêm mới
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("product-addNew") class="h-4 w-4 accent-blue-600")
-
-          // Hàng 4: Chỉnh sửa
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-fix")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Chỉnh sửa
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("product-fix") class="h-4 w-4 accent-blue-600")
-
-          // Hàng 5: Xóa
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="product-delete")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xóa
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("product-delete") class="h-4 w-4 accent-blue-600")
-          // ----------
-          tr
-            td(colspan=records.length class="p-2") 
-              h1(class="font-bold text-xl") Nhóm quyền
-          // Hàng 2: Xem
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-view")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xem
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("role-view") class="h-4 w-4 accent-blue-600")
-
-          // Hàng 3: Thêm mới
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-addNew")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Thêm mới
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("role-addNew") class="h-4 w-4 accent-blue-600")
-
-          // Hàng 4: Chỉnh sửa
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-fix")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Chỉnh sửa
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("role-fix") class="h-4 w-4 accent-blue-600")
-
-          // Hàng 5: Xóa
-          tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="role-delete")
-            td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xóa
-            each item in records
-              td(class="px-4 py-3 text-center border-t border-gray-200")
-                input(type="checkbox" checked= item.permission.includes("role-delete") class="h-4 w-4 accent-blue-600")
-
-    form(action=`${prefixAdmin}/permission/changePermission?_method=PATCH`,
-        name="form-change-permission"
-        id="form-change-permission"
-        method="post") 
-      input(type="text" class="hidden" name="permission")
-  script(src="/admin/js/permission.js")
+            // Hàng 5: Xóa
+            tr(class="odd:bg-white even:bg-gray-50 hover:bg-blue-50/40 transition" data-name="account-delete")
+              td(class="sticky left-0 bg-inherit px-4 py-3 font-medium text-gray-800 border-t border-gray-200") Xóa
+              each item in records
+                td(class="px-4 py-3 text-center border-t border-gray-200")
+                  input(type="checkbox" checked= item.permission.includes("account-delete") class="h-4 w-4 accent-blue-600")
+            // ----------
+      form(action=`${prefixAdmin}/permission/changePermission?_method=PATCH`,
+          name="form-change-permission"
+          id="form-change-permission"
+          method="post") 
+        input(type="text" class="hidden" name="permission")
+    script(src="/admin/js/permission.js")
+  else 
+    h1 you can not go in here

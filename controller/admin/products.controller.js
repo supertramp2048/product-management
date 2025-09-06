@@ -1,6 +1,8 @@
 // [GET] /admin/products
 const Products = require("../../models/product.model")
 const filterStatus = require("../../helper/filterStatus")
+const createTree = require("../../helper/createTree")
+const Categories = require("../../models/category.model")
 const search = require("../../helper/search")
 module.exports.getProducts = async (req, res) => {
     // filter here
@@ -74,7 +76,7 @@ module.exports.getProducts = async (req, res) => {
     const totalPage = Math.ceil(numberOfProduct / objectPagination.limitItems)
     objectPagination.totalPage = totalPage
     // console.log("number of page is "+totalPage);
-    const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip).sort(sortObj)
+    const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip).sort(sortObj).lean()
     res.render("admin/pages/products/index.pug", {
         products: products,
         btnClicked: btnClicked,
@@ -154,18 +156,29 @@ module.exports.fixProduct = async (req, res) => {
         delete: false,
         _id: id
     }
+    const categories = await Categories.find({delete: false})
+    const newRecords = createTree.tree(categories)
     const product = await Products.findOne(find)
     res.render("admin/pages/products/fixProduct.pug", {
-        product: product
+        title: "fix product",
+        product: product,
+        categories: newRecords
     })
 }
 module.exports.fixProductProcess = async (req, res) => {
     if (req.file) {
         req.body.thumbnail = `${req.file.path}`
     }
-    console.log(req.params.id);
-    
-    await Products.updateOne({ _id: req.params.id }, req.body)
+    let objAccount = {
+        account_id: res.locals.user._id,
+        account_name: res.locals.user.fullName
+    }
+    await Products.updateOne({ _id: req.params.id }, 
+    {
+    $set: req.body,                    // cập nhật các field từ req.body
+    $push: { createdBy: objAccount }    // push thêm vào mảng
+    }
+    )
     req.flash("success", "Updated a new product successfully")
     const backUrl = req.get("referer") || "/admin/products";
     res.redirect(backUrl)
@@ -198,7 +211,13 @@ module.exports.deleteAllProducts = async (req, res) => {
     res.redirect(backUrl)
 }
 module.exports.newProduct = async (req, res) => {
+    let find = {
+        delete: false
+    }
+    const categories = await Categories.find(find)
+    let newRecords = createTree.tree(categories)
     res.render("admin/pages/products/createNewProduct.pug", {
+        categories:newRecords,
         title: "new product"
     })
 }
@@ -211,6 +230,11 @@ module.exports.createNewProduct = async (req, res) => {
     let description = req.body.descriptionCreateForm
     let stock = req.body.stock
     let discount = req.body.discount
+    let objAccount = {
+        account_id: res.locals.user._id,
+        account_name: res.locals.user.fullName
+    }
+    
     // validate file
     // if (req.file.filename) {
     req.body.thumbnail = `${req.file.path}`
@@ -231,7 +255,8 @@ module.exports.createNewProduct = async (req, res) => {
         description: description,
         stock: stock,
         discountPercentage: discount,
-        createAt: this.createAt
+        createAt: this.createAt,
+        createdBy: [objAccount]
     })
     req.flash("success", "Added a new product successfully")
     const backUrl = req.get("referer") || "/admin/products";

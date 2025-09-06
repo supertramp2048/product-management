@@ -2,36 +2,37 @@ extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
 include ../../mixins/hierarchyCategory.pug
 block main 
-  div 
-    +alertSuccess(3000)
-    p(class="text-2xl pb-8") List of categories
-    div
-      div(class="flex justify-between")
-        div 
-          p Danh sách danh mục
-        a(
-          href=`${prefixAdmin}/productsCategory/createNewCategoryPage`
-          class="p-4 border border-green-600 rounded-lg active:bg-green-500"
-        ) + add new category
+  if(rolesCurrent.permission.includes("category-view"))
+    div 
+      +alertSuccess(3000)
+      p(class="text-2xl pb-8") List of categories
       div
-        if categories.length > 0
-          table 
-            thead 
-                th(class="border border-white p-2") 
-                  input(type="checkbox" check-all)
-                th(class="border border-white p-2") STT
-                th(class="border border-white p-2") Category name
-                th(class="border border-white p-2") Image
-                th(class="border border-white p-2") Status
-                th(class="border border-white p-2") Action 
-            +treeCategory(categories,1,"")
-        else  
-          p There is nothing here
-    form(
-      action=""
-      method="POST"
-      id="form-change-status"
-      name="form-change-status"
-      data-path = `${prefixAdmin}/productsCategory/`
-      ) 
-  script(src="/admin/js/category.js") 
+        div(class="flex justify-between")
+          div 
+            p Danh sách danh mục
+          a(
+            href=`${prefixAdmin}/productsCategory/createNewCategoryPage`
+            class="p-4 border border-green-600 rounded-lg active:bg-green-500"
+          ) + add new category
+        div
+          if categories.length > 0
+            table 
+              thead 
+                  th(class="border border-white p-2") 
+                    input(type="checkbox" check-all)
+                  th(class="border border-white p-2") STT
+                  th(class="border border-white p-2") Category name
+                  th(class="border border-white p-2") Image
+                  th(class="border border-white p-2") Status
+                  th(class="border border-white p-2") Action 
+              +treeCategory(categories,1,"")
+          else  
+            p There is nothing here
+      form(
+        action=""
+        method="POST"
+        id="form-change-status"
+        name="form-change-status"
+        data-path = `${prefixAdmin}/productsCategory/`
+        ) 
+    script(src="/admin/js/category.js") 
