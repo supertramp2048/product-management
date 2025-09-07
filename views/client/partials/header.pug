@@ -1,14 +1,21 @@
 include ../../client/mixins/category.pug
-header(class=" w-full h-28 flex justify-center items-center bg-slate-100")
-  div(class="flex w-4/5 ")
-    div(class="basis-3/12")
-      a(href="/")
-        img(src="/images/logo.png", alt="logo")
-    div(class="basis-9/12 flex items-center")
-      ul(class="flex gap-5 main") 
-        li(class="border border-slate-500 p-2 rounded-md") 
-          a(href="/") Home
-        li(class="border border-slate-500 p-2 rounded-md") 
-          a(href="/products") Product
-        li(class="border border-slate-500 p-2 rounded-md " )  Category
-          +chooseCategory(layoutCategory)
+include ../../client/mixins/search.pug
+
+header(class="w-full h-28 flex justify-center items-center bg-slate-100")   
+  div(class="flex w-4/5 items-center")     
+    div(class="basis-3/12 flex items-center")       
+      +search(keySearch)     
+    div(class="basis-3/12 flex items-center justify-center")       
+      a(href="/")         
+        img(src="/images/logo.png", alt="logo")     
+    div(class="basis-6/12 flex items-center justify-center")       
+      ul(class="flex gap-5 main items-center z-50")          
+        li(class="border border-slate-500 p-2 rounded-md")            
+          a(href="/") Home         
+        li(class="border border-slate-500 p-2 rounded-md")            
+          a(href="/products") Product         
+        li(class="border border-slate-500 p-2 rounded-md")
+          | Category           
+          +chooseCategory(layoutCategory) 
+      div(class="p-2")
+        a(href="/cart" class="text-3xl") <i class="fa-solid fa-cart-shopping"></i>

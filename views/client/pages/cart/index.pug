@@ -1,0 +1,22 @@
+extends ../../layouts/default.pug
+block main 
+  h1(class="text-3xl font-bold text-green-700") Giỏ hàng
+  div 
+    each item in cart
+      .cart-item.flex.gap-4.items-center.border-b.py-4
+        img.w-20.h-20.object-cover.rounded(src=item.thumbnail alt=item.title)
+        .flex-1
+            h3.text-lg.font-semibold #{item.title}
+            .flex.items-center.gap-2
+            button.px-2.py-1.border.rounded(type="button" minus data-product-id=item.product_id) -
+            span #{item.quantity}
+            button.px-2.py-1.border.rounded(type="button" plus data-product-id=item.product_id) +
+            span.ml-4.font-semibold.text-red-600 #{item.price}đ
+        button.ml-4.px-2.py-1.text-white.bg-red-500.rounded(type="button" cart-delete-product-btn data-product-id=item.product_id) Xóa
+    form(action="",
+        name="updateCart"
+        update-cart-form
+        pathUpdateCart = "/cart/update"
+        method="post") 
+        input(type="text" name="product_id")
+  script(src="/client/js/cart.js") 

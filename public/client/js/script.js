@@ -1,6 +1,6 @@
+
 // Lấy các nút phân trang
 const PaginationBtn = document.querySelectorAll('[btn-navigation]')
-
 // Lấy form tìm kiếm và div chứa icon loading
 const formSearch = document.getElementById("form-search")
 const divLoader = document.getElementById("divLoader")
@@ -48,7 +48,8 @@ window.addEventListener("pageshow", () => {
 const btnShowCategory = document.getElementById("btnShowCategory")
 let categoryMenu = document.getElementById("mainCategory")
 let showCategoryVar = false
-btnShowCategory.addEventListener("click",()=>{
+if(btnShowCategory){
+  btnShowCategory.addEventListener("click",()=>{
     showCategoryVar = !showCategoryVar
     if(showCategoryVar == true){
        categoryMenu.classList.remove("hidden")
@@ -57,3 +58,43 @@ btnShowCategory.addEventListener("click",()=>{
         categoryMenu.classList.add("hidden")
     }
 })
+}
+
+// show alert success
+const showAlert = document.querySelector('[show-success-alert]')
+
+if (showAlert) {
+    setTimeout(
+        alertTimeOut
+        , parseInt(showAlert.getAttribute("data-time")))
+}
+function alertTimeOut() {
+    showAlert.classList.add("hidden")
+}
+// -------------
+// show alert fail
+const showAlertFail = document.querySelector('[show-fail-alert]')
+if (showAlertFail) {
+    setTimeout(
+        alertTimeOutFail
+        , parseInt(showAlertFail.getAttribute("data-time")))
+}
+function alertTimeOutFail() {
+    showAlertFail.classList.add("hidden")
+}
+// ---------
+// ---------
+ // them su kien cho close alert button 
+    const closeAlertSuccess = document.querySelector("[close-alert-btn-success]")
+    const closeAlertFail = document.querySelector("[close-alert-btn-fail]")
+    
+    if (closeAlertSuccess) {
+        closeAlertSuccess.addEventListener("click", () => {
+           showAlert.classList.add("hidden")
+        })
+    }
+    if (closeAlertFail) {
+        closeAlertFail.addEventListener("click", () => {
+           showAlertFail.classList.add("hidden")
+        })
+    }

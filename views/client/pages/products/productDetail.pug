@@ -1,42 +1,83 @@
 extends ../../layouts/default.pug
-
-block main
-  div(class="min-h-screen bg-gray-50 py-8")
-    div(class="max-w-6xl mx-auto p-6 bg-white rounded-xl shadow-lg border border-gray-200")
-      
-      h1(class="text-3xl sm:text-4xl font-bold mb-8 text-center text-gray-800 border-b border-gray-200 pb-6")
-        | Chi tiết sản phẩm
-
-      // Layout chính: ảnh + thông tin
-      div(class="flex flex-col lg:flex-row gap-12 items-start")
+include ../../mixins/alertSuccess.pug
+block main  
+  +alertSuccess(3000)
+  +alertFail(3000)
+  div(class="min-h-screen bg-gray-50 py-8")     
+    div(class="max-w-6xl mx-auto p-6 bg-white rounded-xl shadow-lg border border-gray-200")              
+      h1(class="text-3xl sm:text-4xl font-bold mb-8 text-center text-gray-800 border-b border-gray-200 pb-6")         
+        | Chi tiết sản phẩm        
+      // Layout chính: ảnh + thông tin       
+      div(class="flex flex-col lg:flex-row gap-12 items-start")                  
+        // Hình ảnh sản phẩm         
+        div(class="w-full lg:w-[450px] flex justify-center")           
+          img(             
+            src=product.thumbnail              
+            class="rounded-xl border-2 border-gray-300 shadow-lg w-full max-w-[400px] h-auto object-cover hover:shadow-xl transition-shadow duration-300"              
+            alt="Hình sản phẩm"           
+          )         
         
-        // Hình ảnh sản phẩm
-        div(class="w-full lg:w-[450px] flex justify-center")
-          img(
-            src=product.thumbnail 
-            class="rounded-xl border-2 border-gray-300 shadow-lg w-full max-w-[400px] h-auto object-cover hover:shadow-xl transition-shadow duration-300" 
-            alt="Hình sản phẩm"
-          )
-
-        // Nội dung chi tiết
-        div(class="flex-1 space-y-8")
+        // Nội dung chi tiết         
+        div(class="flex-1 space-y-6")                      
+          h2(class="text-3xl font-bold text-gray-800 mb-4")             
+            | !{product.title}            
           
-          h2(class="text-3xl font-bold text-pink-600 mb-4")
-            | !{product.title}
-
-          p(class="text-gray-700 leading-relaxed text-lg bg-gray-50 p-6 rounded-lg border-l-4 border-pink-500")
-            | #{product.description}
-
-          div(class="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6")
+          p(class="text-gray-600 text-sm mb-2")
+            | Danh mục: 
+            span(class="text-blue-500 hover:underline cursor-pointer") #{product.category}
+          
+          // Giá sản phẩm
+          div(class="mb-6")
+            // Giá khuyến mãi (giá hiện tại)
+            div(class="text-4xl font-bold text-green-600 mb-2")
+              | #{Math.round(product.price * (100 - product.discountPercentage) / 100)}$
             
-            // Discount info
-            div(class="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl border border-orange-200 text-center")
-              p(class="mb-2")
-                span(class="font-bold text-gray-800 text-lg block mb-2") Discount:
-                span(class="text-4xl font-bold text-orange-600") #{product.discountPercentage}%
+            // Giá gốc (gạch ngang)
+            div(class="text-2xl text-gray-500 line-through mb-2")
+              | #{product.price}$
             
-            // Stock info  
-            div(class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200 text-center")
-              p(class="mb-2")
-                span(class="font-bold text-gray-800 text-lg block mb-2") Còn trong kho:
+            // Phần trăm giảm giá
+            div(class="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold")
+              | Giảm tới #{product.discountPercentage}%
+          
+          // Thông tin kho
+          div(class="flex items-center gap-2 mb-6")
+            span(class="text-gray-700 font-medium") Còn lại:
+            span(class="bg-green-500 text-white px-2 py-1 rounded text-sm font-bold") #{product.stock}
+            span(class="text-gray-600") sản phẩm
+
+          p(class="text-gray-700 leading-relaxed text-base bg-gray-50 p-6 rounded-lg border-l-4 border-blue-500 mb-6")             
+            | #{product.description}            
+
+          // Form thêm vào giỏ hàng
+          form(action=`/cart/add/${product._id}`, method="post", class="space-y-4")
+            // Input số lượng
+            div(class="border-2 border-red-300 rounded-lg p-4")
+              input(
+                type="number" 
+                name="quantity" 
+                value="1" 
+                min="1" 
+                max=product.stock
+                class="w-full text-center text-lg font-medium border-0 focus:outline-none bg-transparent"
+              )
+            
+            // Nút thêm vào giỏ hàng
+            button(
+              type="submit"
+              class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-lg text-lg transition-colors duration-300 shadow-lg hover:shadow-xl"
+            )
+              | Thêm vào giỏ hàng
+
+          div(class="grid grid-cols-1 sm:grid-cols-2 gap-8 pt-6")                          
+            // Discount info             
+            div(class="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl border border-orange-200 text-center")               
+              p(class="mb-2")                 
+                span(class="font-bold text-gray-800 text-lg block mb-2") Discount:                 
+                span(class="text-4xl font-bold text-orange-600") #{product.discountPercentage}%                          
+            
+            // Stock info               
+            div(class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200 text-center")               
+              p(class="mb-2")                 
+                span(class="font-bold text-gray-800 text-lg block mb-2") Còn trong kho:                 
                 span(class="text-4xl font-bold text-green-600") #{product.stock}
