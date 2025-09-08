@@ -896,10 +896,6 @@ video {
   top: 0px;
 }
 
-.bottom-0 {
-  bottom: 0px;
-}
-
 .z-10 {
   z-index: 10;
 }
@@ -946,6 +942,10 @@ video {
   margin-left: 1rem;
 }
 
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
 .mr-1 {
   margin-right: 0.25rem;
 }
@@ -964,10 +964,6 @@ video {
 
 .mt-6 {
   margin-top: 1.5rem;
-}
-
-.ml-6 {
-  margin-left: 1.5rem;
 }
 
 .block {
@@ -1026,6 +1022,14 @@ video {
   height: 300px;
 }
 
+.h-\[400px\] {
+  height: 400px;
+}
+
+.h-\[40px\] {
+  height: 40px;
+}
+
 .h-\[80px\] {
   height: 80px;
 }
@@ -1042,20 +1046,8 @@ video {
   height: 100vh;
 }
 
-.h-\[900px\] {
-  height: 900px;
-}
-
-.h-\[500px\] {
-  height: 500px;
-}
-
-.h-\[400px\] {
-  height: 400px;
-}
-
-.h-\[40px\] {
-  height: 40px;
+.h-5 {
+  height: 1.25rem;
 }
 
 .min-h-16 {
@@ -1102,10 +1094,6 @@ video {
   width: 1rem;
 }
 
-.w-4\/5 {
-  width: 80%;
-}
-
 .w-40 {
   width: 10rem;
 }
@@ -1134,6 +1122,10 @@ video {
   width: 160px;
 }
 
+.w-\[200px\] {
+  width: 200px;
+}
+
 .w-\[500px\] {
   width: 500px;
 }
@@ -1150,8 +1142,8 @@ video {
   width: 100%;
 }
 
-.w-\[200px\] {
-  width: 200px;
+.w-5 {
+  width: 1.25rem;
 }
 
 .max-w-4xl {
@@ -1162,16 +1154,12 @@ video {
   max-width: 72rem;
 }
 
-.max-w-\[400px\] {
-  max-width: 400px;
+.max-w-\[900px\] {
+  max-width: 900px;
 }
 
 .max-w-md {
   max-width: 28rem;
-}
-
-.max-w-\[900px\] {
-  max-width: 900px;
 }
 
 .flex-1 {
@@ -1180,10 +1168,6 @@ video {
 
 .basis-3\/12 {
   flex-basis: 25%;
-}
-
-.basis-6\/12 {
-  flex-basis: 50%;
 }
 
 .basis-4\/12 {
@@ -1759,6 +1743,10 @@ video {
   line-height: 1.25;
 }
 
+.leading-5 {
+  line-height: 1.25rem;
+}
+
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity, 1));
@@ -2057,24 +2045,8 @@ video {
     height: 500px;
   }
 
-  .lg\:h-\[600px\] {
-    height: 600px;
-  }
-
-  .lg\:h-\[300px\] {
-    height: 300px;
-  }
-
-  .lg\:w-\[450px\] {
-    width: 450px;
-  }
-
-  .lg\:w-\[900px\] {
-    width: 900px;
-  }
-
-  .lg\:w-\[600px\] {
-    width: 600px;
+  .lg\:w-4\/5 {
+    width: 80%;
   }
 
   .lg\:w-\[700px\] {
@@ -2083,10 +2055,6 @@ video {
 
   .lg\:w-full {
     width: 100%;
-  }
-
-  .lg\:w-4\/5 {
-    width: 80%;
   }
 
   .lg\:grid-cols-4 {

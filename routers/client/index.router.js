@@ -5,8 +5,10 @@ const categoryMiddleware = require("../../middleware/client/category.middleware"
 const cartMiddleware = require("../../middleware/client/cartId.middleware")
 const searchResult = require("./searchResult.route")
 const cart = require("./cart.route")
+const cartLengthMiddleware = require("../../middleware/client/cartLength.middleware")
 module.exports = (app) => {
     app.use(categoryMiddleware.category)
+    app.use(cartLengthMiddleware.arrayLength)
     app.use('/',homeRouter)
     app.use("/products", productRouter);
     app.use("/contact",contactRouter)

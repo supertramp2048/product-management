@@ -24,6 +24,7 @@ module.exports.search = async (req,res) => {
     //console.log(objectPagination.totalPage);
     const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skipItems).sort({position: 1})
      res.render("client/pages/search/index.pug", {
+        title: "Tìm kiếm",
         products: products,
         pagination: objectPagination,
         keySearch: searchObject.keySearch,

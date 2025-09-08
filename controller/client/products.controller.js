@@ -29,6 +29,7 @@ module.exports.products = async (req, res) => {
     //console.log(objectPagination.totalPage);
     const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skipItems).sort({position: 1})
     res.render("client/pages/products/index.pug", {
+        title: "Sản phẩm",
         products: products,
         pagination: objectPagination,
         keySearch: searchObject.keySearch,
@@ -93,6 +94,7 @@ module.exports.category = async (req,res) => {
     objectPagination.skipItems = (objectPagination.currentPage - 1) * objectPagination.limitItems
     const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skipItems).sort({position: 1})
     res.render("client/pages/products/categoryProducts.pug", {
+        title:"Danh mục",
         products: products,
         pagination: objectPagination,
         keySearch: searchObject.keySearch,
