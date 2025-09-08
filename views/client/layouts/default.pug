@@ -5,10 +5,10 @@ head
   title= title 
   link(rel="stylesheet", href="/css/output.css")
   link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css")
-body
+body(class="flex flex-col")
   include ../partials/header.pug
   include ../partials/loadingIcon.pug
-  div(class="w-5/6 center")
+  div(class="w-5/6 min-h-screen  center")
     block main 
   include ../partials/footer.pug
   script(src="/client/js/script.js")

@@ -4,24 +4,23 @@ block main
   +alertSuccess(3000)
   +alertFail(3000)
   div(class="min-h-screen bg-gray-50 py-8")     
-    div(class="max-w-6xl mx-auto p-6 bg-white rounded-xl shadow-lg border border-gray-200")              
+    div(class="mx-auto p-6 bg-white rounded-xl shadow-lg border border-gray-200")              
       h1(class="text-3xl sm:text-4xl font-bold mb-8 text-center text-gray-800 border-b border-gray-200 pb-6")         
         | Chi tiết sản phẩm        
       // Layout chính: ảnh + thông tin       
       div(class="flex flex-col lg:flex-row gap-12 items-start")                  
         // Hình ảnh sản phẩm         
-        div(class="w-full lg:w-[450px] flex justify-center")           
+        div(class="w-full h-[400px] lg:h-[500px] lg:w-[700px] flex justify-center")           
           img(             
             src=product.thumbnail              
-            class="rounded-xl border-2 border-gray-300 shadow-lg w-full max-w-[400px] h-auto object-cover hover:shadow-xl transition-shadow duration-300"              
+            class="rounded-xl object-contain border-2 border-gray-300 shadow-lg w-full max-w-[900px] h-auto hover:shadow-xl transition-shadow duration-300"              
             alt="Hình sản phẩm"           
           )         
         
         // Nội dung chi tiết         
         div(class="flex-1 space-y-6")                      
           h2(class="text-3xl font-bold text-gray-800 mb-4")             
-            | !{product.title}            
-          
+            | !{product.title}                  
           p(class="text-gray-600 text-sm mb-2")
             | Danh mục: 
             span(class="text-blue-500 hover:underline cursor-pointer") #{product.category}
@@ -45,10 +44,6 @@ block main
             span(class="text-gray-700 font-medium") Còn lại:
             span(class="bg-green-500 text-white px-2 py-1 rounded text-sm font-bold") #{product.stock}
             span(class="text-gray-600") sản phẩm
-
-          p(class="text-gray-700 leading-relaxed text-base bg-gray-50 p-6 rounded-lg border-l-4 border-blue-500 mb-6")             
-            | #{product.description}            
-
           // Form thêm vào giỏ hàng
           form(action=`/cart/add/${product._id}`, method="post", class="space-y-4")
             // Input số lượng
@@ -81,3 +76,4 @@ block main
               p(class="mb-2")                 
                 span(class="font-bold text-gray-800 text-lg block mb-2") Còn trong kho:                 
                 span(class="text-4xl font-bold text-green-600") #{product.stock}
+    div(class="text-gray-700 leading-relaxed text-base bg-gray-50 p-6 rounded-lg border-l-4 border-blue-500 mb-6") !{product.description}             

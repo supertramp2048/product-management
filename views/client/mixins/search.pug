@@ -1,4 +1,4 @@
 mixin search(keySearch)  
-    form( class="flex" action="/search" id="form-search" method="GET") 
-        input(type="text", name="keySearch" placeholder="Tim kiem o day" style="width: 200px; height: 40px" value=keySearch class="rounded-md")
+    form( class="flex w-full" action="/search" id="form-search" method="GET") 
+        input(type="text", name="keySearch" placeholder="Tim kiem o day" class="w-[200px] lg:w-full h-[40px]" value=keySearch class="rounded-md")
         button(type="submit" class="btn-primary") search

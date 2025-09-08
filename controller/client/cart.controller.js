@@ -25,7 +25,7 @@ module.exports.cart = async (req,res) => {
     } catch (error) {
         res.render("client/pages/cart/index.pug",{
         title: "Giỏ hàng",
-        cart: cartMap
+        cart: []
     })
     }
     

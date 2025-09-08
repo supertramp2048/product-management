@@ -5,7 +5,6 @@ block main
   div
     div
       div(class="flex")
-        +search(keySearch)
       if products.length < 1
         include ../../partials/notFoundPage.pug   
       +productGrid(products) 
