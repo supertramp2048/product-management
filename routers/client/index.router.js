@@ -3,15 +3,20 @@ const homeRouter = require("./home.router");
 const contactRouter = require("./contact.route");
 const categoryMiddleware = require("../../middleware/client/category.middleware")
 const cartMiddleware = require("../../middleware/client/cartId.middleware")
+const authMiddleware = require("../../middleware/client/authMiddleware")
 const searchResult = require("./searchResult.route")
 const cart = require("./cart.route")
 const cartLengthMiddleware = require("../../middleware/client/cartLength.middleware")
+const checkout = require("./checkout.router")
+const register = require("./register.route")
 module.exports = (app) => {
     app.use(categoryMiddleware.category)
     app.use(cartLengthMiddleware.arrayLength)
-    app.use('/',homeRouter)
-    app.use("/products", productRouter);
-    app.use("/contact",contactRouter)
-    app.use("/search",searchResult)
+    app.use('/',authMiddleware,homeRouter)
+    app.use("/products",authMiddleware, productRouter);
+    app.use("/contact",authMiddleware,contactRouter)
+    app.use("/search",authMiddleware,searchResult)
     app.use("/cart",cartMiddleware.cartId,cart)
+    app.use("/checkout",authMiddleware,checkout)
+    app.use("/register",register)
 }

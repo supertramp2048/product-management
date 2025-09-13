@@ -17,10 +17,17 @@ module.exports.cart = async (req,res) => {
         ...productMap.get(item.product_id)
       })
     )
-   
+    let total = 0 
+    cartMap.forEach(item => {
+        totalOneProduct = item.quantity * (item.price - (item.price*(item.discountPercentage / 100)))
+        console.log(totalOneProduct);
+        
+        total += totalOneProduct
+    })
     res.render("client/pages/cart/index.pug",{
         title: "Giỏ hàng",
-        cart: cartMap
+        cart: cartMap,
+        total: total
     })
     } catch (error) {
         res.render("client/pages/cart/index.pug",{

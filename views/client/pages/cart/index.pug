@@ -1,6 +1,6 @@
 extends ../../layouts/default.pug
 block main 
-  h1(class="text-3xl font-bold text-green-700") Giỏ hàng
+  h1(class="text-3xl font-bold text-red-500") Giỏ hàng
   div 
     each item in cart
       .cart-item.flex.gap-4.items-center.border-b.py-4
@@ -11,12 +11,20 @@ block main
             button.px-2.py-1.border.rounded(type="button" minus data-product-id=item.product_id) -
             span #{item.quantity}
             button.px-2.py-1.border.rounded(type="button" plus data-product-id=item.product_id) +
-            span.ml-4.font-semibold.text-red-600 #{item.price}đ
+            span.ml-4.font-semibold.text-red-600 #{(item.price - item.price * item.discountPercentage / 100) * item.quantity}đ
+            del.ml-4.font-semibold.text-gray-600 #{item.price}
         button.ml-4.px-2.py-1.text-white.bg-red-500.rounded(type="button" cart-delete-product-btn data-product-id=item.product_id) Xóa
+    div(class="flex gap-4 items-center justify-between border-b py-4")
+      p(class="text-2xl font-bold") Tổng tiền 
+      div(class="flex")
+        p(class="pr-4 font-semibold text-2xl") #{total}
+        a(href="/checkout" class="btn-primary leading-8") Thanh toán
     form(action="",
+        class="hidden"
         name="updateCart"
         update-cart-form
         pathUpdateCart = "/cart/update"
         method="post") 
-        input(type="text" name="product_id")
+
+        input(type="text" name="product_id" )
   script(src="/client/js/cart.js") 

@@ -6,6 +6,8 @@ module.exports.productsCategory = async (req,res)=> {
     }
    const categories = await Category.find(find).lean()
    const newCategories = createTree.tree(categories)
+   console.log("day ne ",JSON.stringify(newCategories));
+   
    res.render("admin/pages/productsCategory/index.pug",{
         categories: newCategories
     })

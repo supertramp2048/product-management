@@ -5,7 +5,7 @@ module.exports.category = async (req,res,next) => {
         delete: false
     }
     const oldRecords = await Categories.find(find).lean()
-    const newRecords = createTree.tree(oldRecords)
+    const newRecords = createTree.tree(oldRecords)// In dạng đẹp, dễ đọc
     res.locals.layoutCategory = newRecords
     next()
 }

@@ -17,7 +17,12 @@ header(class="w-full h-28 flex justify-center items-center bg-slate-100")
         li(class="border border-slate-500 p-2 rounded-md")
           | Category           
           +chooseCategory(layoutCategory) 
-      div(class="relative ml-6 p-2")
-        a(href="/cart" class="text-3xl") <i class="fa-solid fa-cart-shopping"></i>
-        if(count && count >0)
-          span(class="absolute block rounded-xl top-0 right-0 bg-red-500 w-5 leading-5 text-white text-center") #{count}
+        li(class="relative ml-6 p-2")
+          a(href="/cart" class="text-3xl") <i class="fa-solid fa-cart-shopping"></i>
+          if(count && count >0)
+            span(class="absolute block rounded-xl top-0 right-0 bg-red-500 w-5 leading-5 text-white text-center") #{count}
+        li
+          if(!user)
+            a(href="/register") Đăng ký
+          else
+            p #{user.email}
