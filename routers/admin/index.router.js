@@ -7,8 +7,18 @@ const permissionRouter = require("./permission.router")
 const account = require("./account.router")
 const authen = require("./authen.router")
 const authentic = require("../../middleware/admin/auth.middleware")
+// khai bao storage cloundinary
+const { storage } = require('../../storage/storage');
+// khai bao multer de upload anh
+const multer = require('multer')
+const upload = multer({ storage })
 module.exports = (app) => {
     const PATH_ADMIN = systemConfig.prefixAdmin
+    // Đặt riêng cho TinyMCE
+    app.post('/admin/productsCategory/tiniMCE-img', upload.single('file'), (req, res) => {
+    if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
+    res.json({ location: req.file.path }); // CloudinaryStorage tự gắn url vào .path
+    });
     app.use(PATH_ADMIN+'/dashboard',authentic.authRequire, dashboardRouter);
     app.use(PATH_ADMIN+'/products',authentic.authRequire,productsRouter);
     app.use(PATH_ADMIN+'/productsCategory',authentic.authRequire,productsCategoryRouter);

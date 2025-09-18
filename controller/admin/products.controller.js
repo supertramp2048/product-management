@@ -1,4 +1,5 @@
 // [GET] /admin/products
+require('dotenv').config();
 const Products = require("../../models/product.model")
 const filterStatus = require("../../helper/filterStatus")
 const createTree = require("../../helper/createTree")
@@ -156,9 +157,11 @@ module.exports.fixProduct = async (req, res) => {
         delete: false,
         _id: id
     }
-    const categories = await Categories.find({delete: false})
+    const categories = await Categories.find({delete: false})    
     const newRecords = createTree.tree(categories)
     const product = await Products.findOne(find)
+    console.log(product);
+    
     res.render("admin/pages/products/fixProduct.pug", {
         title: "fix product",
         product: product,
@@ -179,6 +182,8 @@ module.exports.fixProductProcess = async (req, res) => {
     $push: { createdBy: objAccount }    // push thêm vào mảng
     }
     )
+    console.log(req.body);
+    
     req.flash("success", "Updated a new product successfully")
     const backUrl = req.get("referer") || "/admin/products";
     res.redirect(backUrl)
@@ -227,7 +232,7 @@ module.exports.createNewProduct = async (req, res) => {
     let status = req.body.status
     let price = req.body.price
     let position = req.body.position
-    let description = req.body.descriptionCreateForm
+    let description = req.body.description
     let stock = req.body.stock
     let discount = req.body.discount
     let objAccount = {
@@ -237,8 +242,8 @@ module.exports.createNewProduct = async (req, res) => {
     
     // validate file
     // if (req.file.filename) {
+    let thumbnail = req.file.path
     req.body.thumbnail = `${req.file.path}`
-    let thumbnail = req.body.thumbnail
     
     // }
     // else {
@@ -258,9 +263,12 @@ module.exports.createNewProduct = async (req, res) => {
         createAt: this.createAt,
         createdBy: [objAccount]
     })
+    console.log(description);
+    
     req.flash("success", "Added a new product successfully")
     const backUrl = req.get("referer") || "/admin/products";
     res.redirect(backUrl)
+    
 }
 module.exports.productDetail = async (req,res) => {
     let id = req.params.id

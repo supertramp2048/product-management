@@ -1,3 +1,4 @@
+const TINIMCE_UPLOAD_URL = '!{tiniMCEUploadUrl}';
 document.addEventListener('DOMContentLoaded', () => {
   const uploadHandler = (blobInfo, progress) => new Promise((resolve, reject) => {
     const form = new FormData();
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     plugins: 'image code',
     toolbar: 'undo redo | link image | code',
     automatic_uploads: true,
+    images_upload_handler: uploadHandler,
     file_picker_types: 'image',
     /* and here's our custom image picker*/
   file_picker_callback: (cb, value, meta) => {

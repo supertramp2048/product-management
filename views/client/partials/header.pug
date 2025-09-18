@@ -21,8 +21,14 @@ header(class="w-full h-28 flex justify-center items-center bg-slate-100")
           a(href="/cart" class="text-3xl") <i class="fa-solid fa-cart-shopping"></i>
           if(count && count >0)
             span(class="absolute block rounded-xl top-0 right-0 bg-red-500 w-5 leading-5 text-white text-center") #{count}
-        li
-          if(!user)
-            a(href="/register") Đăng ký
-          else
-            p #{user.email}
+      ul
+        if(!user)
+          li
+            a(href="/register/signIn" class="hover:bg-gray-400 w-full" ) Đăng nhập 
+          li
+            a(href="/register" class="hover:bg-gray-400 w-full") Đăng ký
+        else
+          li
+            p(class="hover:bg-gray-400 w-full p-1 rounded-md") #{user.email}
+          li
+            a(href="/register/logOut" class="hover:bg-gray-400 w-full p-1 rounded-md") Đăng xuất 

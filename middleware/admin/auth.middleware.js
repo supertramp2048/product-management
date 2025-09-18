@@ -2,12 +2,14 @@ const systemConfig = require ("../../config/system")
 const Account = require("../../models/account.model")
 const Role = require("../../models/role.model")
 module.exports.authRequire = async (req,res,next) => {
-    const User = await Account.findOne({token: req.cookies.token}).select("-password")
+    
     if(!req.cookies.token){
         res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
     }
     else{
+     const User = await Account.findOne({token: req.cookies.token}).select("-password")
      if(!User){
+        res.clearCookie('token');
         res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
     }
     else{

@@ -60,22 +60,23 @@ module.exports.fixCategoryPage = async (req,res) => {
    const newCategories = createTree.tree(categories)
 //    console.log(newCategories);
 //    console.log(JSON.stringify(newCategories, null, 2));
-// ham in ra cay category
-//    function titlePrint(arr, prefix = "") {
-//   arr.forEach((item, index) => {
-//     const isLast = index === arr.length - 1;
-//     const connector = isLast ? "└── " : "├── ";
+//ham in ra cay category
+   function titlePrint(arr, prefix = "") {
+  arr.forEach((item, index) => {
+    const isLast = index === arr.length - 1;
+    const connector = isLast ? "└── " : "├── ";
 
-//     console.log(prefix + connector + item.title);
+    console.log(JSON.stringify(newCategories, null, 2));
 
-//     if (item.childrent && item.childrent.length > 0) {
-//       const newPrefix = prefix + (isLast ? "    " : "│   ");
-//       titlePrint(item.childrent, newPrefix);
-//     }
-//   });
-// }
-
-   //titlePrint(newCategories)
+    if (item.childrent && item.childrent.length > 0) {
+      const newPrefix = prefix + (isLast ? "    " : "│   ");
+      titlePrint(item.childrent, newPrefix);
+    }
+  });
+}
+   console.log(JSON.stringify(newCategories));
+   
+   titlePrint(newCategories)
     let id= req.params.id
     const category = await Category.findOne({_id: id})
     res.render("admin/pages/productsCategory/fixCategory.pug",{

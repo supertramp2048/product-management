@@ -9,10 +9,12 @@ const cart = require("./cart.route")
 const cartLengthMiddleware = require("../../middleware/client/cartLength.middleware")
 const checkout = require("./checkout.router")
 const register = require("./register.route")
+const express = require('express')
+const route = express.Router()
 module.exports = (app) => {
     app.use(categoryMiddleware.category)
     app.use(cartLengthMiddleware.arrayLength)
-    app.use('/',authMiddleware,homeRouter)
+    app.get('/',authMiddleware,homeRouter)
     app.use("/products",authMiddleware, productRouter);
     app.use("/contact",authMiddleware,contactRouter)
     app.use("/search",authMiddleware,searchResult)
