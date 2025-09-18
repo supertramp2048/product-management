@@ -78,12 +78,14 @@ module.exports.getProducts = async (req, res) => {
     objectPagination.totalPage = totalPage
     // console.log("number of page is "+totalPage);
     const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip).sort(sortObj).lean()
+    const tiniMCEUploadUrl = process.env.URL_TINIMCE
     res.render("admin/pages/products/index.pug", {
         products: products,
         btnClicked: btnClicked,
         keySearch: searchObject.keySearch,
         pagination: objectPagination,
-        sortChoice:sortChoice 
+        sortChoice:sortChoice,
+        tiniMCEUploadUrl:tiniMCEUploadUrl
     });
 }
 // [PATCH] admin/products/change-status/:status/:id  doi status cua mot san pham 
@@ -160,12 +162,12 @@ module.exports.fixProduct = async (req, res) => {
     const categories = await Categories.find({delete: false})    
     const newRecords = createTree.tree(categories)
     const product = await Products.findOne(find)
-    console.log(product);
-    
+    const tiniMCEUploadUrl = process.env.URL_TINIMCE
     res.render("admin/pages/products/fixProduct.pug", {
         title: "fix product",
         product: product,
-        categories: newRecords
+        categories: newRecords,
+        tiniMCEUploadUrl:tiniMCEUploadUrl
     })
 }
 module.exports.fixProductProcess = async (req, res) => {
@@ -221,9 +223,11 @@ module.exports.newProduct = async (req, res) => {
     }
     const categories = await Categories.find(find)
     let newRecords = createTree.tree(categories)
+    const tiniMCEUploadUrl = process.env.URL_TINIMCE
     res.render("admin/pages/products/createNewProduct.pug", {
         categories:newRecords,
-        title: "new product"
+        title: "new product",
+        tiniMCEUploadUrl: tiniMCEUploadUrl
     })
 }
 module.exports.createNewProduct = async (req, res) => {

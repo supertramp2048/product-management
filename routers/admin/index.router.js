@@ -7,6 +7,8 @@ const permissionRouter = require("./permission.router")
 const account = require("./account.router")
 const authen = require("./authen.router")
 const authentic = require("../../middleware/admin/auth.middleware")
+require('dotenv').config()
+const tiniMCEUrl =process.env.URL_TINIMCE
 // khai bao storage cloundinary
 const { storage } = require('../../storage/storage');
 // khai bao multer de upload anh
