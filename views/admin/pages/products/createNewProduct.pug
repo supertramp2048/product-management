@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/alertSuccess.pug
 include ../../mixins/ChooseCateParent.pug
 block main
+  div(id="tinymce-config" data-upload-url=tiniMCEUploadUrl class="hidden")
   if(rolesCurrent.permission.includes("product-addNew"))
     +alertSuccess(3000)
     +alertFail(3000)

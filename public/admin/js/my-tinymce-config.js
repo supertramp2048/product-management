@@ -1,5 +1,7 @@
-const TINIMCE_UPLOAD_URL = '!{tiniMCEUploadUrl}';
+
 document.addEventListener('DOMContentLoaded', () => {
+  const configDiv = document.getElementById('tinymce-config');
+  const uploadUrl = configDiv.dataset.uploadUrl;
   const uploadHandler = (blobInfo, progress) => new Promise((resolve, reject) => {
     const form = new FormData();
     form.append('file', blobInfo.blob(), blobInfo.filename());
