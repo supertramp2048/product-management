@@ -1,5 +1,5 @@
 // them dotenv để có thể dùng được các biến môi trường
-require('dotenv').config
+require('dotenv').config()
 // thêm cloudinary và multer-storage-cloudinary
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
