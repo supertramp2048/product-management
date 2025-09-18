@@ -2,12 +2,14 @@
 document.addEventListener('DOMContentLoaded', () => {
   const configDiv = document.getElementById('tinymce-config');
   const uploadUrl = configDiv.dataset.uploadUrl;
+  console.log(uploadUrl);
+  
   const uploadHandler = (blobInfo, progress) => new Promise((resolve, reject) => {
     const form = new FormData();
     form.append('file', blobInfo.blob(), blobInfo.filename());
 
     const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:3000/admin/productsCategory/tiniMCE-img');
+    xhr.open('POST', uploadUrl);
     xhr.upload.onprogress = (e) => { if (e.lengthComputable) progress(e.loaded / e.total * 100); };
     xhr.onload = () => {
       try {
