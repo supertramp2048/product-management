@@ -1,34 +1,34 @@
 include ../../client/mixins/category.pug
 include ../../client/mixins/search.pug
 
-header(class="w-full h-28 flex justify-center items-center bg-slate-100")   
-  div(class="flex w-full lg:w-4/5 items-center")        
-    div(class="basis-3/12 hidden lg:block items-center justify-center")       
-      a(href="/")         
-        img(src="/images/logo.png", alt="logo" class="object-contain") 
-    div(class="basis-4/12 w-full flex items-center mr-3")       
+header(class="w-full h-28 flex justify-center items-center bg-gradient-to-r from-slate-50 to-slate-100 shadow-lg border-b border-slate-200")   
+  div(class="flex w-full lg:w-7/8 items-center px-4")        
+    div(class="flex-grow basis-3/12 hidden lg:block items-center justify-center")       
+      a(href="/" class="hover:scale-105 transition-transform duration-200")         
+        img(src="/images/logo.png", alt="logo" class="object-contain h-16 w-auto filter drop-shadow-sm") 
+    div(class="flex-grow basis-4/12 w-full flex items-center mr-3")       
       +search(keySearch)     
-    div(class="basis-5/12 flex items-center justify-center")       
-      ul(class="flex gap-5 main items-center z-50")          
-        li(class="border border-slate-500 p-2 rounded-md")            
-          a(href="/") Home         
-        li(class="border border-slate-500 p-2 rounded-md")            
-          a(href="/products") Product         
-        li(class="border border-slate-500 p-2 rounded-md")
-          | Category           
+    div(class="flex-grow basis-5/12 flex items-center justify-center")       
+      ul(class="flex flex-grow gap-6 main items-center z-50 basis-6/12")          
+        li(class="border border-slate-300 hover:border-blue-400 p-3 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200 hover:bg-blue-50")            
+          a(href="/" class="text-slate-700 hover:text-blue-600 font-medium") Home         
+        li(class="border border-slate-300 hover:border-blue-400 p-3 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200 hover:bg-blue-50")            
+          a(href="/products" class="text-slate-700 hover:text-blue-600 font-medium") Product         
+        li(class="border border-slate-300 hover:border-blue-400 p-3 rounded-lg bg-white shadow-sm hover:shadow-md transition-all duration-200 hover:bg-blue-50 relative")
+          span(class="text-slate-700 hover:text-blue-600 font-medium cursor-pointer") Category           
           +chooseCategory(layoutCategory) 
-        li(class="relative ml-6 p-2")
-          a(href="/cart" class="text-3xl") <i class="fa-solid fa-cart-shopping"></i>
-          if(count && count >0)
-            span(class="absolute block rounded-xl top-0 right-0 bg-red-500 w-5 leading-5 text-white text-center") #{count}
+        li(class="ml-8")
+          a(href="/cart" class="text-3xl relative text-slate-600 hover:text-blue-600 transition-colors duration-200 hover:scale-110 transform") <i class="fa-solid fa-cart-shopping drop-shadow-sm"></i>
+            if(count && count >0)
+              span(class="absolute block text-sm rounded-full top-0 right-0 bg-red-500 hover:bg-red-600 w-6 h-6 leading-6 text-white text-center font-bold shadow-lg animate-pulse") #{count}
       ul
         if(!user)
-          li
-            a(href="/register/signIn" class="hover:bg-gray-400 w-full" ) Đăng nhập 
-          li
-            a(href="/register" class="hover:bg-gray-400 w-full") Đăng ký
+          li(class="hover:bg-gray-400 p-1")
+            a(href="/register/signIn" ) Đăng nhập 
+          li(class="hover:bg-gray-400 p-1")
+            a(href="/register" ) Đăng ký
         else
-          li
-            p(class="hover:bg-gray-400 w-full p-1 rounded-md") #{user.email}
-          li
-            a(href="/register/logOut" class="hover:bg-gray-400 w-full p-1 rounded-md") Đăng xuất 
+          li(class="hover:bg-gray-400 p-1")
+            p(class="bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-lg text-slate-700 font-medium border border-slate-300 shadow-sm") #{user.email}
+          li(class="hover:bg-gray-400 p-1")
+            a(href="/register/logOut" ) Đăng xuất

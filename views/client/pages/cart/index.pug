@@ -11,7 +11,7 @@ block main
             button.px-2.py-1.border.rounded(type="button" minus data-product-id=item.product_id) -
             span #{item.quantity}
             button.px-2.py-1.border.rounded(type="button" plus data-product-id=item.product_id) +
-            span.ml-4.font-semibold.text-red-600 #{(item.price - item.price * item.discountPercentage / 100) * item.quantity}đ
+            span.ml-4.font-semibold.text-red-600 #{Math.round((item.price - item.price * item.discountPercentage / 100) *100) * item.quantity / 100}đ
             del.ml-4.font-semibold.text-gray-600 #{item.price}
         button.ml-4.px-2.py-1.text-white.bg-red-500.rounded(type="button" cart-delete-product-btn data-product-id=item.product_id) Xóa
     div(class="flex gap-4 items-center justify-between border-b py-4")

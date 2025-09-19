@@ -9,6 +9,7 @@ const cart = require("./cart.route")
 const cartLengthMiddleware = require("../../middleware/client/cartLength.middleware")
 const checkout = require("./checkout.router")
 const register = require("./register.route")
+const forgotPassword = require("./forgotPassword.route")
 const express = require('express')
 const route = express.Router()
 module.exports = (app) => {
@@ -18,7 +19,8 @@ module.exports = (app) => {
     app.use("/products",authMiddleware, productRouter);
     app.use("/contact",authMiddleware,contactRouter)
     app.use("/search",authMiddleware,searchResult)
-    app.use("/cart",cartMiddleware.cartId,cart)
+    app.use("/cart",authMiddleware,cartMiddleware.cartId,cart)
     app.use("/checkout",authMiddleware,checkout)
+    app.use("/forgot-password",forgotPassword)
     app.use("/register",register)
 }
