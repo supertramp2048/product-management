@@ -15,3 +15,16 @@ module.exports.signUpValidate = (req,res,next) =>{
   }
  
 }
+module.exports.resetPassword = (req,res,next) => {
+  const password = req.body.password
+  const reEnterPassword = req.body.reEnterPassword
+  if(password == reEnterPassword){
+    next()
+  }
+  else{
+    req.flash("error","Mật khẩu và xác nhận mật khẩu không giông nhau")
+    const backUrl = req.get("referer") || "/";
+    res.redirect(backUrl)
+    return
+  }
+}

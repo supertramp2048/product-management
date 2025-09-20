@@ -17,8 +17,6 @@ body(class="bg-black")
       h1(class="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white")
         | Nhập mã OTP vừa được gửi về địa chỉ email mà bạn vừa nhập
       form(class="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="/forgot-password/otp" method="POST")
-        div 
-          input(type="text" name="email" value=email)
         div
           label(for="otp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white") Mã OTP
           input(

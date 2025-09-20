@@ -20,8 +20,11 @@ mongoose.connect(mongoURL, {
 const forgotPasswordSchema = new mongoose.Schema({
     email: String,
     otp: String,
-    createdAt: { type: Date, expires: '1m', default: Date.now }
+    createdAt: { type: Date, default: Date.now }
 },
 {timestamps: true});
+
+// Tạo TTL index cho createdAt field với thời gian 180 giây (3 phút)
+forgotPasswordSchema.index({ createdAt: 1 }, { expireAfterSeconds: 180 });
 const ForgotPassword = mongoose.model("ForgotPassword",forgotPasswordSchema,"forgotPassword");
 module.exports = ForgotPassword

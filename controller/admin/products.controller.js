@@ -219,7 +219,8 @@ module.exports.deleteAllProducts = async (req, res) => {
 }
 module.exports.newProduct = async (req, res) => {
     let find = {
-        delete: false
+        delete: false,
+        status: "active"
     }
     const categories = await Categories.find(find)
     let newRecords = createTree.tree(categories)

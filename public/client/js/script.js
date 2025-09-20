@@ -1,3 +1,4 @@
+console.log("reset ok 1130");
 
 // Lấy các nút phân trang
 const PaginationBtn = document.querySelectorAll('[btn-navigation]')
@@ -6,9 +7,11 @@ const formSearch = document.getElementById("form-search")
 const divLoader = document.getElementById("divLoader")
 
 // Thêm icon loading khi submit form tìm kiếm
+if(formSearch){
 formSearch.addEventListener("submit", () => {
     divLoader.classList.remove("hidden")
 })
+}
 // xu ly phan trang khi an nut chuyen trang
 const btnPagination = document.querySelectorAll('[btn-Page]')
 btnPagination.forEach(item => {
@@ -43,7 +46,9 @@ PaginationBtn.forEach(item => {
     })
 })
 window.addEventListener("pageshow", () => {
-    divLoader.classList.add("hidden")
+    if(divLoader){
+      divLoader.classList.add("hidden")
+    }
 })
 const btnShowCategory = document.getElementById("btnShowCategory")
 let categoryMenu = document.getElementById("mainCategory")
