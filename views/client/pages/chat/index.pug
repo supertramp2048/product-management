@@ -1,0 +1,75 @@
+head 
+  meta(charset=UTF-8)
+  meta(name="viewport", content="width=device-width, initial-scale=1.0")
+  title= title 
+  link(rel="stylesheet", href="/css/output.css")
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css")
+body
+  .chat-container
+      //- Message 1 (other)
+      .message.other
+        img.avatar(src="https://randomuser.me/api/portraits/women/68.jpg")
+        .bubble
+          span.name Bonnie Green
+          br
+          | That's awesome. 
+          .time 11:46
+      //- Message 2 (user)
+      .message.user
+        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
+        .bubble
+          span.name You
+          br
+          | Amazing work!
+          .time 11:47
+      //- Message 3 (other)
+      .message.other
+        img.avatar(src="https://randomuser.me/api/portraits/women/68.jpg")
+        .bubble
+          span.name Bonnie Green
+          br
+          | Thank you! 
+          .time 11:48
+      .message.other
+        img.avatar(src="https://randomuser.me/api/portraits/women/68.jpg")
+        .bubble
+          span.name Bonnie Green
+          br
+          | Thank you! 
+          .time 11:48
+      //- Message 2 (user)
+      .message.user
+        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
+        .bubble
+          span.name You
+          br
+          | Amazing work!
+          .time 11:47
+      //- Message 2 (user)
+      .message.user
+        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
+        .bubble
+          span.name You
+          br
+          | Amazing work!
+          .time 11:47
+      //- Message 2 (user)
+      .message.user
+        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
+        .bubble
+          span.name You
+          br
+          | Amazing work!
+          .time 11:47
+      .message.user
+        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
+        .bubble
+          span.name Huy
+          br
+          | Xin chao
+          .time 11:47
+      .chat-input-container
+        .chat-input-box
+            form(action="") 
+                input(type="text" placeholder="Nhập tin nhắn..." autocomplete="off")
+                button(type="button") &#9658;

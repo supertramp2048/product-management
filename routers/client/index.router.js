@@ -10,12 +10,14 @@ const cartLengthMiddleware = require("../../middleware/client/cartLength.middlew
 const checkout = require("./checkout.router")
 const register = require("./register.route")
 const forgotPassword = require("./forgotPassword.route")
+const chat = require("./chat.route")
 const express = require('express')
 const route = express.Router()
 module.exports = (app) => {
     app.use(categoryMiddleware.category)
     app.use(cartLengthMiddleware.arrayLength)
     app.get('/',authMiddleware,homeRouter)
+    app.use("/chat",chat)
     app.use("/products",authMiddleware, productRouter);
     app.use("/contact",authMiddleware,contactRouter)
     app.use("/search",authMiddleware,searchResult)

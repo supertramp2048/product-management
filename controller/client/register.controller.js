@@ -1,4 +1,5 @@
 const userAccount = require("../../models/userAccount.model")
+const Cart = require("../../models/cart.model")
 var md5 = require('md5');
 module.exports.register = async (req,res) => {
     res.render("client/pages/register/index.pug")
@@ -12,10 +13,12 @@ module.exports.signUp = async (req,res) => {
     if(isEmailExited){
         req.flash("error","Email đã được đăng ký")
         res.redirect("/register")
+        return
     }
     else if (isPhoneExited){
         req.flash("error","Số điện thoại đã được đăng ký")
         res.redirect("/register")
+        return
     }
     else {
        try {
@@ -29,7 +32,10 @@ module.exports.signUp = async (req,res) => {
         await newUser.save()
         res.locals.user = newUser
         res.cookie("userToken",newUser.userToken)
-        console.log(req.body);
+        let cart = new Cart()
+        cart.user_id =  newUser._id
+        await cart.save()
+        res.cookie("cartId",cart._id)
        } catch (error) {
         
        }
@@ -47,11 +53,14 @@ module.exports.signInPost = async (req,res) => {
     const hashedPassword = md5(req.body.password)
     req.body.password = hashedPassword
     const objUser = req.body
-    console.log(objUser);
     const isUserExited = await userAccount.findOne(objUser).select("-password")
     if(isUserExited){
         res.locals.user = isUserExited
         res.cookie("userToken",isUserExited.userToken)
+        let cart = await Cart.findOne({user_id: isUserExited._id})
+        if(cart){
+           res.cookie("cartId", cart._id)
+        }
         res.redirect("/")
     }
     else {
@@ -61,5 +70,6 @@ module.exports.signInPost = async (req,res) => {
 }
 module.exports.logOut = async (req,res) => {
     res.clearCookie('userToken');
+    res.clearCookie("cartId")
     res.redirect("/")
 }
