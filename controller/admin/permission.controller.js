@@ -5,6 +5,7 @@ module.exports.permission = async (req,res) => {
     }
     const records = await Role.find(find)
     res.render("admin/pages/permission/index.pug",{
+        title: "Phân quyền",
         records: records
     })
 }

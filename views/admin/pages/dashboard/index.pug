@@ -5,8 +5,26 @@ block main
   if(rolesCurrent.permission.length > 0)
     +alertSuccess(3000)
     h1 Trang tong quan
-      p #{user}
-      p ------------------
-      p= JSON.stringify(rolesCurrento)
+      h2 #{user.fullName}
+      div(class="grid grid-cols-3 gap-2")
+        div(class="bg-gray-400 p-3 rounded-md shadow-lg block")
+          p(class="text-xl font-bold") Đơn đặt hàng
+          ul 
+            li Số đơn hàng : #{objDashboard.orderNumber}
+        div(class="bg-gray-400 p-3 rounded-md shadow-lg block")
+          p(class="text-xl font-bold") Sản phẩm 
+          ul 
+            li Số sản phẩm đang kích hoạt : #{objDashboard.activeProducts}
+            li Số sản phẩm đang không kích hoạt : #{objDashboard.inactiveProducts}
+            li Đang xóa mềm : #{objDashboard.deletedProducts}
+        div(class="bg-gray-400 p-3 rounded-md shadow-lg block")
+          p(class="text-xl font-bold") Tài khoản
+            li Đang kích hoạt : #{objDashboard.activeUserAccounts}
+            li Đang không kích hoạt : #{objDashboard.inactiveUserAccounts}
+        div(class="bg-gray-400 p-3 rounded-md shadow-lg block")
+          p(class="text-xl font-bold") Danh mục
+          ul 
+            li Đang kích hoạt : #{objDashboard.activeCategorys}
+            li Đang không kích hoạt : #{objDashboard.inactiveCategorys}      
   else 
     h1 Bạn không thể xem trang này

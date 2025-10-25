@@ -29,7 +29,10 @@ mongoose.connect(mongoURL, {
             type: String,
             default:defaultAvatar
         },
-        status:String,
+        status:{
+            type: String,
+            default: "active"
+        },
         delete: {
             type: Boolean,
             default: false

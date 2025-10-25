@@ -1,2 +1,48 @@
 footer
-  div(class="w-full  bg-black h-[100px]") footer
+  div(class="w-full bg-gray-900 text-gray-100 py-8 px-4")
+    div(class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8")
+      //- Cột 1: Logo + Slogan
+      div
+        div(class="flex items-center space-x-2 mb-3")
+          img(src=generalSettingObj.companyLogo alt="Logo" class="w-8 h-8")
+          span(class="text-xl font-bold text-white") Group2Pro
+        p(class="text-gray-400 text-sm") #{generalSettingObj.slogan}
+
+      //- Cột 2: Danh mục chính
+      div
+        h3(class="font-semibold mb-3 text-lg") Sản phẩm
+        ul
+          li(class="mb-2")
+            a(href="#" class="hover:underline hover:text-blue-400 transition") Điện thoại
+          li(class="mb-2")
+            a(href="#" class="hover:underline hover:text-blue-400 transition") Laptop
+          li(class="mb-2")
+            a(href="#" class="hover:underline hover:text-blue-400 transition") Webcam
+          li
+            a(href="#" class="hover:underline hover:text-blue-400 transition") Phụ kiện
+
+      //- Cột 3: Thông tin
+      div
+        h3(class="font-semibold mb-3 text-lg") Về chúng tôi
+        ul
+          li(class="mb-2")
+            a(href="#" class="hover:underline hover:text-blue-400 transition") Giới thiệu
+          li(class="mb-2")
+            a(href="#" class="hover:underline hover:text-blue-400 transition") Tin tức
+          li
+            a(href="#" class="hover:underline hover:text-blue-400 transition") Tuyển dụng
+
+      //- Cột 4: Liên hệ
+      div
+        h3(class="font-semibold mb-3 text-lg") Liên hệ
+        p(class="text-gray-400 text-sm mb-1") Địa chỉ: #{generalSettingObj.address}
+        p(class="text-gray-400 text-sm mb-1") Email: #{generalSettingObj.email}
+        p(class="text-gray-400 text-sm") Hotline: #{generalSettingObj.hotline}
+
+    //- Copyright & Social
+    div(class="mt-8 flex flex-col sm:flex-row items-center justify-between max-w-7xl mx-auto border-t border-gray-700 pt-4")
+      p(class="text-gray-500 text-xs") © 2025 Group2Pro. All rights reserved.
+      div(class="flex space-x-4 mt-2 sm:mt-0")
+        each item in generalSettingObj.socialMedia
+          a(href=item.linkSocialMedia) 
+            i(class="text-3xl") !{item.logoSocialMedia}

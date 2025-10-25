@@ -22,9 +22,11 @@ module.exports.signUp = async (req,res) => {
     }
     else {
        try {
+        if(req.file){
         console.log("file: ",req.file);
-        
         req.body.avatar = req.file.path
+        }
+        
         const newPassword = md5(req.body.password)
         req.body.password = newPassword
         const objUser = req.body

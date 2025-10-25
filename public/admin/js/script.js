@@ -102,7 +102,8 @@ if (btnStatus.length > 0) {
     })
 }
 // them su kien submit cho form, loc theo search
-formSearch.addEventListener('submit', (e) => {
+if(formSearch){
+    formSearch.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(formSearch);
     const keyword = formData.get('keySearch');
@@ -117,21 +118,28 @@ formSearch.addEventListener('submit', (e) => {
     }
 
 })
+}
 // them su kien cho o select sort
 const clearSortBtn = document.querySelector('[btnClearSort]')
-clearSortBtn.addEventListener("click",()=>{
+if(clearSortBtn){
+    clearSortBtn.addEventListener("click",()=>{
     var url = new URL(window.location.href)
     url.searchParams.delete('sort')
     window.location.href=url.href
 })
+}
+
 
 const sortChoice = document.querySelector('[name="sortProducts"]')
-sortChoice.addEventListener("change", ()=>{
+if(sortChoice){
+   sortChoice.addEventListener("change", ()=>{
     let choice = sortChoice.value
     let url = new URL(window.location.href)
     url.searchParams.set('sort',choice)
     window.location.href=url.href
-})
+}) 
+}
+
 // them script de xem truoc file
 function previewFile(){
         var preview = document.querySelector('[previewImage]')

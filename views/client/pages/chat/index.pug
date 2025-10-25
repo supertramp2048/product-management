@@ -1,75 +1,50 @@
-head 
-  meta(charset=UTF-8)
-  meta(name="viewport", content="width=device-width, initial-scale=1.0")
-  title= title 
-  link(rel="stylesheet", href="/css/output.css")
-  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css")
-body
-  .chat-container
-      //- Message 1 (other)
-      .message.other
-        img.avatar(src="https://randomuser.me/api/portraits/women/68.jpg")
-        .bubble
-          span.name Bonnie Green
-          br
-          | That's awesome. 
-          .time 11:46
-      //- Message 2 (user)
-      .message.user
-        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
-        .bubble
-          span.name You
-          br
-          | Amazing work!
-          .time 11:47
-      //- Message 3 (other)
-      .message.other
-        img.avatar(src="https://randomuser.me/api/portraits/women/68.jpg")
-        .bubble
-          span.name Bonnie Green
-          br
-          | Thank you! 
-          .time 11:48
-      .message.other
-        img.avatar(src="https://randomuser.me/api/portraits/women/68.jpg")
-        .bubble
-          span.name Bonnie Green
-          br
-          | Thank you! 
-          .time 11:48
-      //- Message 2 (user)
-      .message.user
-        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
-        .bubble
-          span.name You
-          br
-          | Amazing work!
-          .time 11:47
-      //- Message 2 (user)
-      .message.user
-        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
-        .bubble
-          span.name You
-          br
-          | Amazing work!
-          .time 11:47
-      //- Message 2 (user)
-      .message.user
-        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
-        .bubble
-          span.name You
-          br
-          | Amazing work!
-          .time 11:47
-      .message.user
-        img.avatar(src="https://randomuser.me/api/portraits/men/10.jpg")
-        .bubble
-          span.name Huy
-          br
-          | Xin chao
-          .time 11:47
-      .chat-input-container
+extends ../../layouts/default.pug
+block main 
+  if(user)
+    div
+      .chat-container
+          //- Message 1 (other)
+          div(class="message user")
+                img.avatar(src="")
+                .bubble 
+                  span.name #{"email"}
+                    div(class="typing")
+                      span
+                      span
+                      span
+          div(class="chat p-2" my-id = user._id)
+            each chat in chats
+              div(class=(chat.user_id == user._id ? "message user" : "message other"))
+                img.avatar(src=chat.infoUser.avatar)
+                .bubble 
+                  span.name #{chat.infoUser.email}
+                  br
+                  | #{chat.content}
+          div(class="inner-list-typing")
+      div(class="chat-input-container")
         .chat-input-box
-            form(action="") 
-                input(type="text" placeholder="Nhập tin nhắn..." autocomplete="off")
-                button(type="button") &#9658;
+            form(action=""  formSendMessage enctype="multipart/form-data")
+              //- Upload file (đúng cấu trúc thư viện)
+              div(class="custom-file-container" data-upload-id="my-unique-id")
+                label Upload ảnh
+                  a(class="custom-file-container__image-clear" href="javascript:void(0)" title="Clear") ×
+                label(class="custom-file-container__custom-file")
+                  input(type="file" class="hidden" class="custom-file-container__custom-file__custom-file-input" multiple)
+                  span(class="custom-file-container__custom-file__custom-file-control")
+                div(class="custom-file-container__image-preview")
+
+              //- Nút emoji
+              span(class="emoji-btn")
+                i(class="fa-solid fa-face-grin-tongue-wink")
+                div(class="tooltip" role="tooltip")
+                  emoji-picker  
+
+              //- Ô nhập nội dung + nút gửi
+              input(type="text" name="content" placeholder="Nhập tin nhắn..." autocomplete="off")
+              button(type="submit")
+                i(class="fa-solid fa-paper-plane")
+  else 
+    h1 Bạn phải đăng nhập
+
+  script(src="/socket.io/socket.io.js") 
+  script(type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js")

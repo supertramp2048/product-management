@@ -6,7 +6,9 @@ const roleRouter = require("./role.router");
 const permissionRouter = require("./permission.router")
 const account = require("./account.router")
 const authen = require("./authen.router")
+const generalSetting = require("./generalSetting.route")
 const authentic = require("../../middleware/admin/auth.middleware")
+const generalSettingMiddleware = require("../../middleware/admin/generalsetting.middleware")
 require('dotenv').config()
 const tiniMCEUrl =process.env.URL_TINIMCE
 // khai bao storage cloundinary
@@ -27,5 +29,6 @@ module.exports = (app) => {
     app.use(PATH_ADMIN+'/role',authentic.authRequire,roleRouter)
     app.use(PATH_ADMIN+'/permission',authentic.authRequire,permissionRouter)
     app.use(PATH_ADMIN+'/account',authentic.authRequire,account)
+    app.use(PATH_ADMIN+'/generalSetting',authentic.authRequire,generalSettingMiddleware.generalsetting,generalSetting)
     app.use(PATH_ADMIN+'/auth',authen)
 }

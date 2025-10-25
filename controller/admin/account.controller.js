@@ -8,6 +8,7 @@ module.exports.accountPage = async (req,res) => {
     }
     const accounts = await Account.find(find)
     res.render("admin/pages/accounts/index.pug",{
+        title: "Tài khoản",
         accounts:accounts,
     })
 }

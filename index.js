@@ -32,6 +32,13 @@ const port = process.env.port;
 app.use(bodyParser.urlencoded())
 app.use(bodyParser.json())
 app.use(methodOverride('_method'))
+// socket.io
+const http = require('http')
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server);
+global._io = io
+
 // ---------
 // cau hinh de mọi file/tệp trong thư mục public và các thư mục con bên trong nó đều được phục vụ trực tiếp ra ngoài.
 app.use(express.static(`${__dirname}/public`));
@@ -46,6 +53,6 @@ app.locals.prefixAdmin = systemConfix.prefixAdmin;
 // Router
 route(app);
 adminRoute(app);
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`exemple app is listening on port ${port}`);
 })

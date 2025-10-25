@@ -5,6 +5,7 @@ module.exports.role = async(req,res) => {
     }
     const GroupRoles =await Role.find(find)
     res.render("admin/pages/role/index.pug",{
+        title: "Nhóm quyền",
         roles: GroupRoles
     })
 }

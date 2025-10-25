@@ -1,0 +1,46 @@
+extends ../../layouts/default.pug
+include ../../mixins/alertSuccess.pug
+block main
+  form( method="POST" 
+        id="formChangeSetting"
+        action=`${prefixAdmin}/generalSetting/FooterSetting?_method=PATCH` 
+        enctype="multipart/form-data"
+        class="max-w-3xl mx-auto p-8 bg-white rounded-2xl shadow-lg space-y-8")
+    //- Logo & Quote
+    div
+        div
+            label(for="companyLogo" class="block font-semibold mb-2") Logo công ty
+            input(type="file" onchange="previewFile()" name="companyLogo" id="companyLogo" placeholder="Link logo (hoặc upload)" class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400")
+            img(src= generalSettingObj.companyLogo, previewImage class="w-[80px] h-[80px]" alt="anh logo")
+        div(class="flex")
+            label(for="slogan" class="block font-semibold mb-2") Slogan
+            input(type="text" name="slogan" id="slogan" value=generalSettingObj.slogan placeholder="Slogan, qoute..." class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400")
+        
+    //- Contact Info
+    div
+        div
+        label(for="address" class="block font-semibold mb-2") Địa chỉ
+        input(type="text" name="address" id="address" value=generalSettingObj.address placeholder="Địa chỉ" class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400")
+        div
+        label(for="email" class="block font-semibold mb-2") Email
+        input(type="email" name="email" id="email" value=generalSettingObj.email placeholder="Email liên hệ" class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400")
+        div
+        label(for="hotline" class="block font-semibold mb-2") Hotline
+        input(type="text" name="hotline" id="hotline" value=generalSettingObj.hotline placeholder="Hotline" class="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400")
+
+    //- Social Media
+    div(class="" id="socialMediaContainer")
+      label(class="block font-semibold mb-2") Mạng xã hội
+      div(id="social-media-list" socialMediaList class="space-y-4")
+        button( type="button" class="btn-primary" addNewSocialMedia) Thêm mới
+        //- Social media row #1
+        each item in generalSettingObj.socialMedia
+            div(class="flex items-center gap-4")
+                input(type="text"  name="logoSocialMedia" placeholder="Icon (link SVG, tên icon, ...)" class="border px-3 py-2 rounded-lg flex-1 focus:ring-2 focus:ring-blue-400" value=item.logoSocialMedia)
+                input(type="text" name="linkSocialMedia" placeholder="Link Facebook/Messenger/Zalo..." class="border px-3 py-2 rounded-lg flex-1 focus:ring-2 focus:ring-blue-400" value=item.linkSocialMedia)
+                //- Có thể thêm nút xóa nếu muốn dynamic
+      input(type="text" name="objSocialMedia" placeholder="Link Facebook/Messenger/Zalo..." class="border px-3 py-2 rounded-lg flex-1 focus:ring-2 focus:ring-blue-400" )
+    //- Submit
+    div(class="flex justify-end")
+        button(type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg shadow") Lưu footer
+    script(src="/admin/js/generalSetting.js") 

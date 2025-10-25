@@ -80,6 +80,7 @@ module.exports.getProducts = async (req, res) => {
     const products = await Products.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip).sort(sortObj).lean()
     const tiniMCEUploadUrl = process.env.URL_TINIMCE
     res.render("admin/pages/products/index.pug", {
+        title: "Danh sách sản phẩm",
         products: products,
         btnClicked: btnClicked,
         keySearch: searchObject.keySearch,
