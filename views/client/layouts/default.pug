@@ -5,66 +5,66 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title #{title}
     //- File Upload With Preview styles
-    link(rel="stylesheet", href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css")
+    link(rel="stylesheet" href="https://unpkg.com/file-upload-with-preview/dist/file-upload-with-preview.min.css")
     //- tailwind
     link(rel="stylesheet", href="/css/output.css")
     //- Custom styles for file upload
-    style.
-      .custom-file-container {
-        margin-bottom: 10px !important;
-        min-height: 60px !important;
-        display: block !important;
-      }
-      .custom-file-container__custom-file {
-        background: #f8fafc !important;
-        border: 2px dashed #cbd5e1 !important;
-        border-radius: 8px !important;
-        padding: 12px !important;
-        text-align: center !important;
-        cursor: pointer !important;
-        transition: all 0.3s ease !important;
-        color: #64748b !important;
-        font-size: 14px !important;
-      }
-      .custom-file-container__custom-file:hover {
-        background: #f1f5f9 !important;
-        border-color: #94a3b8 !important;
-        color: #475569 !important;
-      }
-      .custom-file-container__image-preview {
-        max-width: 150px !important;
-        max-height: 150px !important;
-        margin: 5px !important;
-        display: inline-block !important;
-      }
-      .custom-file-container__image-preview img {
-        width: 100% !important;
-        height: auto !important;
-        max-width: 150px !important;
-        max-height: 150px !important;
-        object-fit: cover !important;
-        border-radius: 6px !important;
-        border: 1px solid #e2e8f0 !important;
-      }
-      .custom-file-container__image-clear {
-        position: absolute !important;
-        top: -8px !important;
-        right: -8px !important;
-        background: #ef4444 !important;
-        color: white !important;
-        border-radius: 50% !important;
-        width: 20px !important;
-        height: 20px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 12px !important;
-        cursor: pointer !important;
-        z-index: 10 !important;
-      }
-      .custom-file-container__image-clear:hover {
-        background: #dc2626 !important;
-      }
+    //- style.
+    //-   .custom-file-container {
+    //-     margin-bottom: 10px !important;
+    //-     min-height: 60px !important;
+    //-     display: block !important;
+    //-   }
+    //-   .custom-file-container__custom-file {
+    //-     background: #f8fafc !important;
+    //-     border: 2px dashed #cbd5e1 !important;
+    //-     border-radius: 8px !important;
+    //-     padding: 12px !important;
+    //-     text-align: center !important;
+    //-     cursor: pointer !important;
+    //-     transition: all 0.3s ease !important;
+    //-     color: #64748b !important;
+    //-     font-size: 14px !important;
+    //-   }
+    //-   .custom-file-container__custom-file:hover {
+    //-     background: #f1f5f9 !important;
+    //-     border-color: #94a3b8 !important;
+    //-     color: #475569 !important;
+    //-   }
+    //-   .custom-file-container__image-preview {
+    //-     max-width: 150px !important;
+    //-     max-height: 150px !important;
+    //-     margin: 5px !important;
+    //-     display: inline-block !important;
+    //-   }
+    //-   .custom-file-container__image-preview img {
+    //-     width: 100% !important;
+    //-     height: auto !important;
+    //-     max-width: 150px !important;
+    //-     max-height: 150px !important;
+    //-     object-fit: cover !important;
+    //-     border-radius: 6px !important;
+    //-     border: 1px solid #e2e8f0 !important;
+    //-   }
+    //-   .custom-file-container__image-clear {
+    //-     position: absolute !important;
+    //-     top: -8px !important;
+    //-     right: -8px !important;
+    //-     background: #ef4444 !important;
+    //-     color: white !important;
+    //-     border-radius: 50% !important;
+    //-     width: 20px !important;
+    //-     height: 20px !important;
+    //-     display: flex !important;
+    //-     align-items: center !important;
+    //-     justify-content: center !important;
+    //-     font-size: 12px !important;
+    //-     cursor: pointer !important;
+    //-     z-index: 10 !important;
+    //-   }
+    //-   .custom-file-container__image-clear:hover {
+    //-     background: #dc2626 !important;
+    //-   }
     //- Use a stable FA version you actually have available:
     link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css")
   body(class="flex flex-col")
@@ -75,7 +75,14 @@ html(lang="en")
       block main
 
     include ../partials/footer.pug
-    script(src="https://unpkg.com/file-upload-with-preview@3.2.8/dist/file-upload-with-preview.min.js")
+    //- script(type="module").
+    //-   import { FileUploadWithPreview } from 'https://unpkg.com/file-upload-with-preview@6/dist/index.js';
+    //-   import 'file-upload-with-preview/dist/style.css';
+    //-   const upload = new FileUploadWithPreview('my-unique-id',{
+    //-     multiple: true, 
+    //-     maxFileCount: 6
+    //-   });
+    //-script(src="https://unpkg.com/file-upload-with-preview@3.2.8/dist/file-upload-with-preview.min.js")
     script(src="/client/js/script.js")
     script(src="/client/js/socket.js")
     // Your module script is fine as a module:

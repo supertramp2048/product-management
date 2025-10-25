@@ -1,8 +1,13 @@
 console.log("chat js");
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+import { FileUploadWithPreview } from 'https://unpkg.com/file-upload-with-preview@6/dist/index.js';
+    const upload = new FileUploadWithPreview('my-unique-id',{
+        multiple: true, 
+        maxFileCount: 6
+      });
 window.addEventListener('DOMContentLoaded', () => {
 // file upload preview ------------------------
-var upload = new FileUploadWithPreview('my-unique-id')
+//var upload = new FileUploadWithPreview('my-unique-id')
 //---------------------------------------------
 const chatContainer = document.querySelector(".chat-container")
 window.onload = function (){
@@ -10,12 +15,11 @@ window.onload = function (){
 }
 const formSendMessage = document.querySelector("[formSendMessage]")
 if(formSendMessage){
-    formSendMessage.addEventListener("submit", (e) =>{
+    formSendMessage.addEventListener("submit", async (e) =>{
         e.preventDefault()
         const content = e.target.elements.content.value;
         const files = upload.cachedFileArray; // Lấy danh sách file đã chọn
         console.log(files);
-        
         if(content || files.length > 0){
             // Tạo object chứa nội dung và file
             const messageData = {
