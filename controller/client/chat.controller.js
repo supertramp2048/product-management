@@ -24,7 +24,8 @@ module.exports.chat = async(req,res) => {
             userId: userId,
             userEmail: userEmail,
             avatar: avatar,
-            content: data.content
+            content: data.content,
+            images: data.images
         })
         })
         socket.on('CLIENT_IS_TYPING', (data) =>{
@@ -64,3 +65,28 @@ module.exports.chat = async(req,res) => {
         })
     }
 }
+module.exports.chatUploadImgs = async (req, res) => {
+  try {
+    // Kiểm tra file Multer gửi lên
+    // console.log("Files nhận được:", req.files);
+    // console.log("Body nhận được:", req.body);
+
+    // Ví dụ xử lý — chỉ trả JSON test thôi
+    res.json({
+      message: "Upload thành công!",
+      count: req.files?.length || 0,
+      files: req.files?.map(f => ({
+        name: f.originalname,
+        path: f.path,
+        size: f.size,
+      })),
+    });
+
+    // Hoặc nếu muốn redirect lại trang cũ:
+    // const backUrl = req.get('referer') || '/';
+    // res.redirect(backUrl);
+  } catch (err) {
+    console.error("Lỗi khi upload:", err);
+    res.status(500).json({ error: err.message });
+  }
+};

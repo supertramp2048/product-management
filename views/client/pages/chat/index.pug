@@ -20,18 +20,19 @@ block main
                   span.name #{chat.infoUser.email}
                   br
                   | #{chat.content}
+                  if chat.images && chat.images.length > 0
+                    div(class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mt-2")
+                        each image in chat.images
+                          a(href=image) 
+                            img(src=image, class="w-full h-24 sm:h-28 md:h-32 object-cover rounded cursor-pointer" alt="")
           div(class="inner-list-typing")
       div(class="chat-input-container")
         .chat-input-box
             form(action=""  formSendMessage enctype="multipart/form-data")
               //- Upload file (đúng cấu trúc thư viện)
-              div(class="custom-file-container" data-upload-id="my-unique-id")
-                //- label Upload ảnh
-                //-   a(class="custom-file-container__image-clear" href="javascript:void(0)" title="Clear") ×
-                //- label(class="custom-file-container__custom-file")
-                //-   input(type="file" class="hidden" class="custom-file-container__custom-file__custom-file-input" multiple)
-                //-   span(class="custom-file-container__custom-file__custom-file-control")
-                //- div(class="custom-file-container__image-preview")
+              span(class="image_icon p-1")
+                i(class="fa-solid fa-images")
+              div(class="custom-file-container hidden" data-upload-id="my-unique-id")
               //- Nút emoji
               span(class="emoji-btn")
                 i(class="fa-solid fa-face-grin-tongue-wink")

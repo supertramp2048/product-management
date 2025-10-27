@@ -43,24 +43,8 @@ module.exports.fixCategoryPage = async (req,res) => {
         delete: false,
     }
    const categories = await Category.find(find).lean()
-//    function createTree.tree(arr,parent_id = ""){
-//     let tree =[]
-//       arr.forEach(item => {
-//          if(item.parent_id == parent_id){            
-//            const newItem = { ...item }
-//            const children = createTree.tree(arr,item._id)
-//            if(children.length > 0 ){
-//               newItem.child  = children
-//            }
-//            tree.push(newItem)
-//          }
-//       })
-//     return tree
-//    }
    const newCategories = createTree.tree(categories)
-//    console.log(newCategories);
-//    console.log(JSON.stringify(newCategories, null, 2));
-//ham in ra cay category
+
    function titlePrint(arr, prefix = "") {
   arr.forEach((item, index) => {
     const isLast = index === arr.length - 1;
