@@ -1,48 +1,48 @@
 extends ../../layouts/default.pug
 block main 
   if(user)
-    div
-      .chat-container
-          //- Message 1 (other)
-          div(class="message user")
-                img.avatar(src="")
-                .bubble 
-                  span.name #{"email"}
-                    div(class="typing")
-                      span
-                      span
-                      span
-          div(class="chat p-2" my-id = user._id)
-            each chat in chats
-              div(class=(chat.user_id == user._id ? "message user" : "message other"))
-                img.avatar(src=chat.infoUser.avatar)
-                .bubble 
-                  span.name #{chat.infoUser.email}
-                  br
-                  | #{chat.content}
-                  if chat.images && chat.images.length > 0
-                    div(class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mt-2")
-                        each image in chat.images
-                          a(href=image) 
-                            img(src=image, class="w-full h-24 sm:h-28 md:h-32 object-cover rounded cursor-pointer" alt="")
-          div(class="inner-list-typing")
-      div(class="chat-input-container")
-        .chat-input-box
-            form(action=""  formSendMessage enctype="multipart/form-data")
-              //- Upload file (đúng cấu trúc thư viện)
-              span(class="image_icon p-1")
-                i(class="fa-solid fa-images")
-              div(class="custom-file-container hidden" data-upload-id="my-unique-id")
-              //- Nút emoji
-              span(class="emoji-btn")
-                i(class="fa-solid fa-face-grin-tongue-wink")
-                div(class="tooltip" role="tooltip")
-                  emoji-picker  
+    include ../../partials/loadingIcon.pug
+    .chat-container
+        //- Message 1 (other)
+        div(class="message user")
+              img.avatar(src="")
+              .bubble 
+                span.name #{"email"}
+                  div(class="typing")
+                    span
+                    span
+                    span
+        div(class="chat p-2" my-id = user._id)
+          each chat in chats
+            div(class=(chat.user_id == user._id ? "message user" : "message other"))
+              img.avatar(src=chat.infoUser.avatar)
+              .bubble 
+                span.name #{chat.infoUser.email}
+                br
+                | #{chat.content}
+                if chat.images && chat.images.length > 0
+                  div(class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 mt-2")
+                      each image in chat.images
+                        a(href=image) 
+                          img(src=image, class="w-full h-24 sm:h-28 md:h-32 object-cover rounded cursor-pointer" alt="")
+        div(class="inner-list-typing")
+    div(class="chat-input-container")
+      .chat-input-box
+          form(action=""  formSendMessage enctype="multipart/form-data")
+            //- Upload file (đúng cấu trúc thư viện)
+            span(class="image_icon p-1")
+              i(class="fa-solid fa-images")
+            div(class="custom-file-container hidden" data-upload-id="my-unique-id")
+            //- Nút emoji
+            span(class="emoji-btn")
+              i(class="fa-solid fa-face-grin-tongue-wink")
+              div(class="tooltip" role="tooltip")
+                emoji-picker  
 
-              //- Ô nhập nội dung + nút gửi
-              input(type="text" name="content" placeholder="Nhập tin nhắn..." autocomplete="off")
-              button(type="submit")
-                i(class="fa-solid fa-paper-plane")
+            //- Ô nhập nội dung + nút gửi
+            input(type="text" name="content" placeholder="Nhập tin nhắn..." autocomplete="off")
+            button(type="submit")
+              i(class="fa-solid fa-paper-plane")
   else 
     h1 Bạn phải đăng nhập
 

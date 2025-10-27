@@ -29,31 +29,41 @@ sendImgBtn.addEventListener("click", ()=> {
 
 //- end sự kiện người ấn nut gửi ảnh
 const formSendMessage = document.querySelector("[formSendMessage]")
+const divLoader = document.getElementById("divLoader")
 if(formSendMessage){
     formSendMessage.addEventListener("submit", async (e) =>{
-        e.preventDefault()
-        const content = e.target.elements.content.value;
-        const files = upload.cachedFileArray; // Lấy danh sách file đã chọn
-        const formData = new FormData() //tạo ra 1 form để gửi ảnh lên backend và up lên clound
-        for(const file of files ){
-            formData.append("images", file);
-        }
-        const res = await fetch('/chat/uploadImgs', { method: 'POST', body: formData });// post form này lên backend
-        const data = await res.json();
-        const imgs = data.files.map(f => f.path);
-        //console.log('path: ',imgs);
-        if(content || imgs.length > 0){
-            // Tạo object chứa nội dung và file
-            const messageData = {
-                content: content,
-                images: imgs.length > 0 ? imgs : null
-            };
-            //console.log(messageData);
+        try {
+            divLoader.classList.remove("hidden")
+            e.preventDefault()
+            const content = e.target.elements.content.value;
+            const files = upload.cachedFileArray; // Lấy danh sách file đã chọn
+            const formData = new FormData() //tạo ra 1 form để gửi ảnh lên backend và up lên clound
+            for(const file of files ){
+                formData.append("images", file);
+            }
+            const res = await fetch('/chat/uploadImgs', { method: 'POST', body: formData });// post form này lên backend
+            const data = await res.json();
+            const imgs = data.files.map(f => f.path);
+            //console.log('path: ',imgs);
+            if(content || imgs.length > 0){
+                // Tạo object chứa nội dung và file
+                const messageData = {
+                    content: content,
+                    images: imgs.length > 0 ? imgs : null
+                };
+                //console.log(messageData);
 
-            socket.emit('CLIENT_SEND_MESSAGE', messageData)
-            e.target.elements.content.value = ""
-            upload.resetPreviewPanel();
-            upload.cachedFileArray = []
+                socket.emit('CLIENT_SEND_MESSAGE', messageData)
+                e.target.elements.content.value = ""
+                upload.resetPreviewPanel();
+                upload.cachedFileArray = []
+            }
+        } catch (error) {
+            console.log(error);
+            
+        }
+        finally{
+            divLoader.classList.add("hidden")
         }
     })
 }
@@ -138,58 +148,76 @@ document.querySelector('emoji-picker').addEventListener('emoji-click', (event) =
      inputChat.focus();
      typingFunc()
     });
-let isTyping = false
-const list_typing = document.querySelector(".inner-list-typing")
-inputChat.addEventListener("focus", typingFunc)
-function typingFunc(e) {
-    e.preventDefault()
-    isTyping = true
-    socket.emit("CLIENT_IS_TYPING",isTyping)
-}
-inputChat.addEventListener("blur", notTypingFunc)
-function notTypingFunc(e) {
-    e.preventDefault()
-    isTyping = false
-    socket.emit("CLIENT_ISNOT_TYPING",isTyping)
-}
-if(list_typing){
-        socket.on('SERVER_RETURN_CLIENT_IS_TYPING',(data) => {
-        console.log(data.userId+" is typing "+data.isTyping);
-        if(data.isTyping==true){
-           const isExistTyping = list_typing.querySelector(`[user_id="${data.userId}"]`);
-           console.log(isExistTyping);
-           
-            if(!isExistTyping){
-                const boxTyping = document.createElement("div")
-            boxTyping.setAttribute("user_id", data.userId)
-            if(user_id == data.userId){
-                boxTyping.classList.add("message", "user");
-            }
-            else{
-                boxTyping.classList.add("message", "other");
-            }
-            boxTyping.innerHTML = `
-            <img class="avatar" src="${data.avatar}" />
-            <div class="bubble">
-            <span class="name">${data.userEmail}</span><br/>
-            <div class="typing">
-            <span></span>
-            <span></span>
-            <span></span>
-            </div>
-            </div>
-            `
-            list_typing.appendChild(boxTyping)
-          }
-        }
-    })
-}
-if(list_typing){
-    socket.on('SERVER_RETURN_CLIENT_ISNOT_TYPING',(data) => {
-    const boxTypingRemove = list_typing.querySelector(`[user_id="${data.userId}"]`)
-    if(boxTypingRemove){
-        list_typing.removeChild(boxTypingRemove)
+let isTyping = false;
+let typingTimeout;
+const list_typing = document.querySelector(".inner-list-typing");
+
+// Emit typing event
+function setTyping(typing) {
+    if (isTyping !== typing) {
+        isTyping = typing;
+        socket.emit(typing ? "CLIENT_IS_TYPING" : "CLIENT_ISNOT_TYPING", isTyping);
     }
-})
+}
+
+// Khi user đang gõ
+inputChat.addEventListener("input", (e) => {
+    setTyping(true);
+    
+    // Clear timeout cũ
+    clearTimeout(typingTimeout);
+    
+    // Tự động set not typing sau 2 giây không gõ
+    typingTimeout = setTimeout(() => {
+        setTyping(false);
+    }, 2000);
+});
+
+// Khi blur thì dừng typing
+inputChat.addEventListener("blur", (e) => {
+    clearTimeout(typingTimeout);
+    setTyping(false);
+});
+
+// Nhận typing indicator từ server
+if (list_typing) {
+    socket.on('SERVER_RETURN_CLIENT_IS_TYPING', (data) => {
+        console.log(data.userId + " is typing " + data.isTyping);
+        
+        if (data.isTyping === true) {
+            const isExistTyping = list_typing.querySelector(`[user_id="${data.userId}"]`);
+            
+            if (!isExistTyping) {
+                const boxTyping = document.createElement("div");
+                boxTyping.setAttribute("user_id", data.userId);
+                
+                if (user_id == data.userId) {
+                    boxTyping.classList.add("message", "user");
+                } else {
+                    boxTyping.classList.add("message", "other");
+                }
+                
+                boxTyping.innerHTML = `
+                    <img class="avatar" src="${data.avatar}" />
+                    <div class="bubble">
+                        <span class="name">${data.userEmail}</span><br/>
+                        <div class="typing">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                `;
+                list_typing.appendChild(boxTyping);
+            }
+        }
+    });
+
+    socket.on('SERVER_RETURN_CLIENT_ISNOT_TYPING', (data) => {
+        const boxTypingRemove = list_typing.querySelector(`[user_id="${data.userId}"]`);
+        if (boxTypingRemove) {
+            list_typing.removeChild(boxTypingRemove);
+        }
+    });
 }
 })

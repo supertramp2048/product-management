@@ -29,6 +29,8 @@ module.exports.chat = async(req,res) => {
         })
         })
         socket.on('CLIENT_IS_TYPING', (data) =>{
+            console.log(userId,"is typing ",data);
+            
             socket.broadcast.emit('SERVER_RETURN_CLIENT_IS_TYPING', {
                 userId: userId,
                 userEmail: userEmail,
